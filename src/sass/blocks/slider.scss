@@ -1,0 +1,50 @@
+.slider__article {
+  color: $font-white;
+  background: $bg-slide;
+  background-repeat: no-repeat;
+  background-size: cover;
+  width: 688px;
+  height: 100%;
+
+  padding-left: 96px;
+  padding-top: 237px;
+}
+
+.slider__title {
+  margin: 0;
+  font-size: 40px;
+  line-height: 47px;
+  font-weight: bold;
+  margin-bottom: 8px;
+}
+
+.slider__text {
+  margin: 0;
+  font-size: 24px;
+  line-height: 22px;
+  font-weight: 300;
+  color: $grey-light;
+  margin-bottom: 32px;
+}
+
+
+// Swiper customization
+
+.swiper-container {
+  width: 688px;
+}
+
+.swiper-wrapper {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.swiper-pagination {
+  bottom: 0;
+  padding-bottom: 10px;
+}
+
+.swiper-button-prev {
+  color: $bg-white;
+}

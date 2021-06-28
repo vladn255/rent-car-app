@@ -1,0 +1,39 @@
+.button {
+  background: linear-gradient(90deg, #0ec261 2.61%, #039f67 112.6%);
+  background-blend-mode: darken;
+  border-radius: 8px;
+  color: $font-white;
+  text-align: center;
+}
+
+.button--banner {
+  width: 250px;
+  min-height: 48px;
+}
+
+.button--slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 4px;
+  font-size: 18px;
+  line-height: 21px;
+  width: 164px;
+  min-height: 48px;
+}
+
+.button--green {
+  background: linear-gradient(90deg, #13493f 0%, #0c7b1b 100%);
+}
+
+.button--blue {
+  background: linear-gradient(90deg, #132949 0%, #0c7b67 100%);
+}
+
+.button--red {
+  background: linear-gradient(90deg, #493013 0%, #7b0c3b 100%);
+}
+
+.button--purple {
+  background: linear-gradient(90deg, #281349 0%, #720c7b 100%);
+}

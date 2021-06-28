@@ -1,0 +1,25 @@
+.main-footer {
+  width: 100%;
+
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+}
+
+.main-footer__wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding-left: 64px;
+  padding-right: 32px;
+}
+
+.main-footer__copyright {
+  margin: 0;
+  color: $grey-dark;
+}
+
+.main-footer__telephone {
+  color: $main-black;
+}

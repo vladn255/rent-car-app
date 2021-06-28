@@ -1,0 +1,31 @@
+.banner {
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+  align-items: flex-start;
+}
+
+.banner__title {
+  font-size: 70px;
+  line-height: 66px;
+  color: $main-black;
+
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  margin-bottom: 4px;
+}
+
+.banner__title-brand {
+  color: $main-accent-green;
+  margin-bottom: 34px;
+}
+
+.banner__text {
+  font-size: 26px;
+  line-height: 30px;
+  color: $grey-dark;
+
+  margin: 0;
+  margin-bottom: 60px;
+}

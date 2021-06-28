@@ -1,0 +1,32 @@
+.main-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  margin-bottom: 163px;
+}
+
+.main-header__title {
+  font-weight: bold;
+  font-size: 30px;
+  line-height: 35px;
+  color: $main-accent-green;
+
+  margin: 0;
+}
+
+.main-header__location {
+  color: $grey-dark;
+  display: flex;
+  align-items: center;
+
+  &::before {
+    content: "";
+    display: block;
+    width: 30px;
+    height: 20px;
+    background-image: url("../../img/icons/pin-icon.svg");
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}

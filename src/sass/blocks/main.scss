@@ -1,0 +1,11 @@
+.main {
+  display: flex;
+  flex-direction: row;
+}
+
+.main__wrapper {
+  position: relative;
+  min-width: 688px;
+  padding-left: 64px;
+  padding-top: 32px;
+}
