@@ -23,8 +23,14 @@ const SLIDES_INFO = [
         buttonColor: 'purple',
         imgURL: '/img/slides/service-slide.png'
     }
-]
+];
+
+const LANGUAGES = {
+    rus: 'Рус',
+    eng: 'Eng'
+}
 
 export {
-    SLIDES_INFO
+    SLIDES_INFO,
+    LANGUAGES
 }

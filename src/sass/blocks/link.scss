@@ -1,0 +1,29 @@
+.link {
+  color: $main-black;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: $main-accent-green;
+  }
+}
+
+.link--white {
+  color: $grey-light;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: $main-accent-green;
+  }
+}
+
+.link--green {
+  color: $main-accent-green;
+
+  &:hover,
+  &:focus,
+  &:active {
+    color: $grey-light;
+  }
+}

@@ -1,11 +1,20 @@
 .main {
   display: flex;
   flex-direction: row;
+  width: 100vw;
+  padding-left: 64px;
+
+  @media (max-width: $mobile-width) {
+    padding-left: 0;
+  }
 }
 
 .main__wrapper {
   position: relative;
-  min-width: 688px;
   padding-left: 64px;
   padding-top: 32px;
+
+  @media (max-width: $desktop-min-width) {
+    padding-left: 32px;
+  }
 }

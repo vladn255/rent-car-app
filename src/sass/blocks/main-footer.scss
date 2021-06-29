@@ -4,6 +4,11 @@
   position: absolute;
   bottom: 30px;
   left: 0;
+
+  @media (max-width: $mobile-width) {
+    min-height: 72px;
+    background-color: $main-black;
+  }
 }
 
 .main-footer__wrapper {
@@ -13,6 +18,12 @@
 
   padding-left: 64px;
   padding-right: 32px;
+
+  @media (max-width: $mobile-width) {
+    flex-direction: column-reverse;
+    justify-content: center;
+    align-items: flex-end;
+  }
 }
 
 .main-footer__copyright {
@@ -22,4 +33,8 @@
 
 .main-footer__telephone {
   color: $main-black;
+
+  @media (max-width: $mobile-width) {
+    color: $main-accent-green;
+  }
 }

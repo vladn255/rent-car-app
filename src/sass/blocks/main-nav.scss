@@ -1,8 +1,18 @@
 .main-nav {
-  position: relative;
+  flex-shrink: 0;
+  position: absolute;
   background-color: $main-black;
   width: 64px;
+  height: 100%;
   padding-top: 32px;
+
+  @media (max-width: $tablet-width) {
+    width: 86px;
+  }
+
+  @media (max-width: $mobile-width) {
+    background-color: transparent;
+  }
 }
 
 .main-nav__burger,
@@ -14,17 +24,26 @@
   left: 0;
   margin-right: 0;
   background-color: $bg-white;
+
+  @media (max-width: $mobile-width) {
+    background-color: $main-black;
+  }
 }
 
 .main-nav__burger-wrapper {
   position: relative;
+  cursor: pointer;
   display: flex;
   justify-content: center;
   align-items: center;
+
   width: 30px;
   height: 24px;
-  margin: auto;
 
+  margin: auto;
+}
+
+.main-nav {
   &--closed {
     .main-nav__burger {
       width: 24px;
@@ -45,12 +64,79 @@
         top: 8px;
       }
     }
+
+    @media (max-width: $tablet-width) {
+      .main-nav__lang-wrapper {
+        display: block;
+      }
+    }
+
+    @media (max-width: $mobile-width) {
+      .main-nav__lang-wrapper {
+        display: none;
+      }
+    }
+
+    .main-nav__features,
+    .main-nav__socials {
+      display: none;
+    }
   }
 
   &--opened {
-    height: 0;
+    width: 752px;
+    z-index: 3;
+    align-items: flex-start;
+
+    .main-nav__lang-wrapper {
+      display: block;
+    }
+
+    &::after {
+      content: "";
+      display: block;
+      position: absolute;
+      z-index: -1;
+
+      left: 0;
+      top: 0;
+
+      height: 100%;
+      width: 100vw;
+      max-width: $desktop-width;
+
+      background-color: $menu-bgc;
+    }
+
+    @media (max-width: $desktop-min-width) {
+      width: 614px;
+    }
+
+    @media (max-width: $tablet-width) {
+      width: 100%;
+
+      &::after {
+        display: none;
+      }
+
+      .main-nav__lang-wrapper {
+        display: none;
+      }
+    }
+
+    @media (max-width: $mobile-width) {
+      .main-nav__lang-wrapper {
+        display: block;
+      }
+    }
+
+    .main-nav__burger-wrapper {
+      margin-left: 16px;
+    }
 
     .main-nav__burger {
+      padding: 0;
+
       &::before,
       &::after {
         content: "";
@@ -78,9 +164,37 @@
 .main-nav__lang-toggle {
   background-color: transparent;
   color: $main-accent-green;
+  position: relative;
 
   display: flex;
   width: 30px;
   padding: 0;
   margin: auto;
+
+  &:hover,
+  &:focus,
+  &:active {
+    &::before {
+      content: "";
+      display: block;
+      position: absolute;
+      background-color: transparent;
+      z-index: 5;
+      border-radius: 50%;
+      border: 1px solid $bg-white;
+      width: 48px;
+      height: 48px;
+      left: -12px;
+      top: -17px;
+    }
+  }
+
+  &:hover,
+  &:focus {
+    color: $bg-white;
+  }
+
+  &:active {
+    color: $main-accent-green;
+  }
 }

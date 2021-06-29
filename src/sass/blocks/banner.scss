@@ -3,6 +3,10 @@
   flex-direction: column;
   justify-content: start;
   align-items: flex-start;
+
+  @media (max-width: $mobile-width) {
+    position: relative;
+  }
 }
 
 .banner__title {
@@ -14,11 +18,21 @@
   flex-direction: column;
   margin: 0;
   margin-bottom: 4px;
+
+  @media (max-width: $mobile-width) {
+    font-size: 32px;
+    line-height: 32px;
+  }
 }
 
 .banner__title-brand {
   color: $main-accent-green;
   margin-bottom: 34px;
+
+  @media (max-width: $mobile-width) {
+    font-size: 32px;
+    line-height: 32px;
+  }
 }
 
 .banner__text {
@@ -28,4 +42,9 @@
 
   margin: 0;
   margin-bottom: 60px;
+
+  @media (max-width: $mobile-width) {
+    font-size: 18px;
+    line-height: 21px;
+  }
 }

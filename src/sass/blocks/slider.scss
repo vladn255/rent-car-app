@@ -1,12 +1,12 @@
 .slider__article {
   color: $font-white;
-  background: $bg-slide;
   background-repeat: no-repeat;
-  background-size: cover;
-  width: 688px;
+  background-size: contain;
+  background-blend-mode: normal;
   height: 100%;
 
   padding-left: 96px;
+  padding-right: 64px;
   padding-top: 237px;
 }
 
@@ -27,11 +27,18 @@
   margin-bottom: 32px;
 }
 
-
 // Swiper customization
 
 .swiper-container {
   width: 688px;
+
+  @media (max-width: $desktop-min-width) {
+    width: 410px;
+  }
+
+  @media (max-width: $tablet-width) {
+    display: none;
+  }
 }
 
 .swiper-wrapper {
@@ -45,6 +52,37 @@
   padding-bottom: 10px;
 }
 
-.swiper-button-prev {
+.swiper-pagination-bullet {
+  background-color: $bg-white;
+  opacity: 1;
+}
+
+.swiper-pagination-bullet-active {
+  background-color: $main-accent-green;
+}
+
+.swiper-button-prev,
+.swiper-button-next {
   color: $bg-white;
+  height: $min-height-default;
+  width: 64px;
+  top: 0;
+  margin-top: 0;
+
+  &:hover,
+  &:focus {
+    background-color: $slider-bgc;
+  }
+
+  @media (max-width: $desktop-min-width) {
+    width: 32px;
+  }
+}
+
+.swiper-button-prev {
+  left: 0;
+}
+
+.swiper-button-next {
+  right: 0;
 }

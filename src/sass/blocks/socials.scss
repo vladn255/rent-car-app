@@ -1,0 +1,18 @@
+.socials {
+  display: flex;
+  padding: 0;
+  margin-left: 128px;
+}
+
+.socials__item {
+  margin-right: 24px;
+}
+
+.socials__icon {
+  color: $bg-white;
+
+  &:hover,
+  &:focus {
+    color: $main-accent-green;
+  }
+}

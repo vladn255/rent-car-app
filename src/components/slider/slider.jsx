@@ -1,10 +1,6 @@
 import SwiperCore, { Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from "swiper/react";
 
-import 'swiper/swiper.scss';
-import 'swiper/components/navigation/navigation.scss';
-import 'swiper/components/pagination/pagination.scss';
-
 import { SLIDES_INFO } from '../../const';
 
 SwiperCore.use([Navigation, Pagination]);
@@ -23,7 +19,7 @@ const Slider = () => {
             {SLIDES_INFO.map((slide) => {
                 return (
                     <SwiperSlide tag={'li'} key={`slide-${slide.title}`}>
-                        <article className="slider__article" style={{ backgroundImage: `url(${process.env.PUBLIC_URL}${slide.imgURL})` }}>
+                        <article className="slider__article" style={{ background: `linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%), url(${process.env.PUBLIC_URL}${slide.imgURL})`}}>
                             <div className="slider__wrapper">
                                 <h3 className="slider__title">{slide.title}</h3>
                                 <p className="slider__text">{slide.text}</p>

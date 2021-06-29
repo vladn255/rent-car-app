@@ -10,6 +10,10 @@ $bg-slide: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%);
 
 $font-white: #ffffff;
 
+$menu-bgc: rgba(21, 27, 31, 0.81);
+$slider-bgc: rgba(14, 194, 97, 0.2);
+
+
 // Fonts
 
 $font-family: "Roboto", "Arial", sans-serif;
@@ -23,3 +27,5 @@ $desktop-width: 1440px;
 $desktop-min-width: 1024px;
 $tablet-width: 768px;
 $mobile-width: 320px;
+
+$min-height-default: 810px;

@@ -1,59 +1,56 @@
+import { useState } from "react";
+
+import { LANGUAGES } from "../../const.js";
+
+import Socials from "../socials/socials";
+
 const MainNav = () => {
+    const [isMenuOpened, setIsMenuOpened] = useState(false);
+    const [isLangEng, setIsLangEng] = useState(true);
+
+    const menuToggleClickHandler = (evt) => {
+        evt.preventDefault();
+        setIsMenuOpened(!isMenuOpened);
+    }
+
+    const langToggleClickHandler = (evt) => {
+        evt.preventDefault();
+        setIsLangEng(!isLangEng);
+    }
+
     return (
-        <nav className="main-nav">
-            <div className="main-nav__burger-wrapper main-nav__burger-wrapper--closed">
+        <nav className={`main-nav main-nav${isMenuOpened ? '--opened' : '--closed'}`}>
+            <div className="main-nav__burger-wrapper" onClick={menuToggleClickHandler}>
                 <button className="main-nav__burger" type="button">
                     <span className="visually-hidden">Открыть/закрыть меню</span>
                 </button>
             </div>
-            <ul className="main-nav__features visually-hidden">
-                <li className="main-nav__feature">
-                    <a className="main-nav__link" href="/#">
+            <ul className="main-nav__features features">
+                <li className="features__item">
+                    <a className="features__link" href="/#">
                         Парковка
                     </a>
                 </li>
-                <li className="main-nav__feature">
-                    <a className="main-nav__link" href="/#">
+                <li className="features__item">
+                    <a className="features__link" href="/#">
                         Страховка
                     </a>
                 </li>
-                <li className="main-nav__feature">
-                    <a className="main-nav__link" href="/#">
+                <li className="features__item">
+                    <a className="features__link" href="/#">
                         Бензин
                     </a>
                 </li>
-                <li className="main-nav__feature">
-                    <a className="main-nav__link" href="/#">
+                <li className="features__item">
+                    <a className="features__link" href="/#">
                         Обслуживание
                     </a>
                 </li>
             </ul>
-            <ul className="main-nav__socials socials visually-hidden">
-                <li className="socials__item socials__item--telegram">
-                    <a className="socials__link" href="/#">
-                        <svg className="socials__icon">
-
-                        </svg>
-                    </a>
-                </li>
-                <li className="socials__item socials__item--facebook">
-                    <a className="socials__link" href="/#">
-                        <svg className="socials__icon">
-
-                        </svg>
-                    </a>
-                </li>
-                <li className="socials__item socials__item--instagram">
-                    <a className="socials__link" href="/#">
-                        <svg className="socials__icon">
-
-                        </svg>
-                    </a>
-                </li>
-            </ul>
-            <div className="main-nav__lang-wrapper">
-                <button className="main-nav__lang-toggle" type="button">
-                    Eng
+            <Socials />
+            <div className="main-nav__lang-wrapper" onClick={langToggleClickHandler}>
+                <button className="main-nav__lang-toggle" type="button" >
+                    {isLangEng ? LANGUAGES.eng : LANGUAGES.rus}
                 </button>
             </div>
         </nav>

@@ -4,6 +4,12 @@
   align-items: center;
 
   margin-bottom: 163px;
+
+  @media (max-width: $mobile-width) {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+  }
 }
 
 .main-header__title {

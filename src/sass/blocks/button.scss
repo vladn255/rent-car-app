@@ -4,11 +4,32 @@
   border-radius: 8px;
   color: $font-white;
   text-align: center;
+
+  &:hover,
+  &:focus {
+    background: linear-gradient(90deg, #0b934a 2.61%, #026e47 112.6%);
+  }
+
+  &:active {
+    background: linear-gradient(90deg, #076432 2.61%, #013c27 112.6%);
+  }
+
+  &:disabled {
+    background-color: $bg-white;
+  }
 }
 
 .button--banner {
   width: 250px;
   min-height: 48px;
+
+  @media (max-width: $mobile-width) {
+    position: absolute;
+    width: $mobile-width;
+    border-radius: 0;
+    left: -32px;
+    bottom: 0;
+  }
 }
 
 .button--slide {
