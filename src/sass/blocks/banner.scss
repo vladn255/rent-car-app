@@ -27,11 +27,13 @@
 
 .banner__title-brand {
   color: $main-accent-green;
-  margin-bottom: 34px;
+  margin-bottom: 27px;
 
   @media (max-width: $mobile-width) {
     font-size: 32px;
     line-height: 32px;
+    margin-top: 5px;
+    margin-bottom: 10px;
   }
 }
 
@@ -46,5 +48,6 @@
   @media (max-width: $mobile-width) {
     font-size: 18px;
     line-height: 21px;
+    margin-bottom: 82px;
   }
 }

@@ -2,6 +2,14 @@
   display: flex;
   padding: 0;
   margin-left: 128px;
+
+  @media (max-width: $desktop-min-width) {
+    margin-left: 96px;
+  }
+
+  @media (max-width: $mobile-width) {
+    margin-left: 28px;
+  }
 }
 
 .socials__item {

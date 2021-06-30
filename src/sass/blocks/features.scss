@@ -1,15 +1,40 @@
 .features {
+  margin: 0;
   font-weight: bold;
   font-size: 32px;
   line-height: 37px;
   color: $font-white;
   text-transform: uppercase;
 
-  padding-top: 243px;
+  padding-top: 250px;
   padding-left: 128px;
+  margin-bottom: 42px;
+
+  @media (max-width: $desktop-min-width) {
+    padding-left: 96px;
+    padding-right: 32px;
+  }
+
+  @media (max-width: $tablet-width) {
+    font-size: 28px;
+    line-height: 33px;
+
+    padding-top: 260px;
+    margin-bottom: 36px;
+  }
+
+  @media (max-width: $mobile-width) {
+    font-size: 22px;
+    line-height: 26px;
+
+    padding-top: 32px;
+    padding-left: 28px;
+  }
 }
 
 .features__item {
+  margin-bottom: 16px;
+
   .features__link {
     color: inherit;
   }

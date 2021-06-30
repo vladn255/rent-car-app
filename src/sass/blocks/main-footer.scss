@@ -1,13 +1,21 @@
 .main-footer {
+  font-size: 13px;
+  line-height: 15px;
   width: 100%;
 
   position: absolute;
   bottom: 30px;
   left: 0;
 
+  @media (max-width: $tablet-width) {
+    bottom: 37px;
+  }
+
   @media (max-width: $mobile-width) {
     min-height: 72px;
     background-color: $main-black;
+    bottom: 0;
+    padding-top: 18px;
   }
 }
 
@@ -17,12 +25,19 @@
   align-items: center;
 
   padding-left: 64px;
-  padding-right: 32px;
+  padding-right: 64px;
+
+  @media (max-width: $desktop-min-width) {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
 
   @media (max-width: $mobile-width) {
     flex-direction: column-reverse;
     justify-content: center;
     align-items: flex-end;
+
+    padding-right: 16px;
   }
 }
 
@@ -36,5 +51,6 @@
 
   @media (max-width: $mobile-width) {
     color: $main-accent-green;
+    margin-bottom: 10px;
   }
 }

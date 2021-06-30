@@ -3,12 +3,14 @@
   justify-content: space-between;
   align-items: center;
 
-  margin-bottom: 163px;
+  margin-bottom: 170px;
 
   @media (max-width: $mobile-width) {
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-end;
+
+    margin-bottom: 35px;
   }
 }
 
@@ -19,6 +21,10 @@
   color: $main-accent-green;
 
   margin: 0;
+
+  @media (max-width: $mobile-width) {
+    margin-bottom: 8px;
+  }
 }
 
 .main-header__location {

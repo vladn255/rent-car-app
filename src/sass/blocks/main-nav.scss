@@ -9,10 +9,6 @@
   @media (max-width: $tablet-width) {
     width: 86px;
   }
-
-  @media (max-width: $mobile-width) {
-    background-color: transparent;
-  }
 }
 
 .main-nav__burger,
@@ -65,6 +61,11 @@
       }
     }
 
+    .main-nav__features,
+    .main-nav__socials {
+      display: none;
+    }
+
     @media (max-width: $tablet-width) {
       .main-nav__lang-wrapper {
         display: block;
@@ -72,14 +73,14 @@
     }
 
     @media (max-width: $mobile-width) {
+      z-index: 3;
+      background-color: transparent;
+      width: 72px;
+      padding-top: 22px;
+
       .main-nav__lang-wrapper {
         display: none;
       }
-    }
-
-    .main-nav__features,
-    .main-nav__socials {
-      display: none;
     }
   }
 
@@ -89,7 +90,7 @@
     align-items: flex-start;
 
     .main-nav__lang-wrapper {
-      display: block;
+      display: none;
     }
 
     &::after {
@@ -106,6 +107,35 @@
       max-width: $desktop-width;
 
       background-color: $menu-bgc;
+    }
+
+    .main-nav__burger-wrapper {
+      margin-left: 16px;
+    }
+
+    .main-nav__burger,
+    .main-nav__burger::before,
+    .main-nav__burger::after {
+      background-color: $bg-white;
+    }
+
+    .main-nav__burger {
+      padding: 0;
+
+      &::before,
+      &::after {
+        content: "";
+        width: 30px;
+        height: 3px;
+      }
+
+      &::before {
+        transform: rotate(45deg);
+      }
+
+      &::after {
+        transform: rotate(-45deg);
+      }
     }
 
     @media (max-width: $desktop-min-width) {
@@ -125,31 +155,24 @@
     }
 
     @media (max-width: $mobile-width) {
+      background-color: $main-black;
+      padding-top: 23px;
+
+      .main-nav__burger-wrapper {
+        margin-left: 23px;
+      }
+
       .main-nav__lang-wrapper {
         display: block;
-      }
-    }
-
-    .main-nav__burger-wrapper {
-      margin-left: 16px;
-    }
-
-    .main-nav__burger {
-      padding: 0;
-
-      &::before,
-      &::after {
-        content: "";
-        width: 30px;
-        height: 3px;
+        width: 85px;
       }
 
-      &::before {
-        transform: rotate(45deg);
-      }
-
-      &::after {
-        transform: rotate(-45deg);
+      .main-nav__burger {
+        &::before,
+        &::after {
+          width: 25px;
+          height: 3px;
+        }
       }
     }
   }
