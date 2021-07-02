@@ -1,0 +1,24 @@
+.app {
+  display: flex;
+  flex-direction: row;
+  min-height: $min-height-default;
+  width: 100vw;
+  max-width: $desktop-width;
+  min-width: $mobile-width;
+  margin-left: auto;
+  margin-right: auto;
+  position: relative;
+
+  @media (max-width: $desktop-min-width) {
+    max-width: $desktop-min-width;
+  }
+
+  @media (max-width: $tablet-width) {
+    max-width: $tablet-width;
+  }
+
+  @media (max-width: $mobile-width) {
+    max-width: $mobile-width;
+    min-height: 568px;
+  }
+}

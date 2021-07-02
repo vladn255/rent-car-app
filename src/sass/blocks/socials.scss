@@ -1,0 +1,26 @@
+.socials {
+  display: flex;
+  padding: 0;
+  margin-left: 128px;
+
+  @media (max-width: $desktop-min-width) {
+    margin-left: 96px;
+  }
+
+  @media (max-width: $mobile-width) {
+    margin-left: 28px;
+  }
+}
+
+.socials__item {
+  margin-right: 24px;
+}
+
+.socials__icon {
+  color: $bg-white;
+
+  &:hover,
+  &:focus {
+    color: $main-accent-green;
+  }
+}

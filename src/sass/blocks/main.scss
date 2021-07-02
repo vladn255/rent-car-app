@@ -1,0 +1,33 @@
+.main {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  padding-left: 64px;
+
+  @media (max-width: $tablet-width) {
+    padding-left: 86px;
+  }
+
+  @media (max-width: $mobile-width) {
+    padding-left: 0;
+  }
+}
+
+.main__wrapper {
+  position: relative;
+  padding-left: 64px;
+  padding-right: 64px;
+  padding-top: 32px;
+  flex-grow: 1;
+
+  @media (max-width: $desktop-min-width) {
+    padding-left: 32px;
+    padding-right: 32px;
+  }
+
+  @media (max-width: $mobile-width) {
+    padding-top: 20px;
+    padding-right: 16px;
+    padding-left: 16px;
+  }
+}
