@@ -1,0 +1,60 @@
+.form__input {
+  border: none;
+  border-bottom: 1px solid $grey-dark;
+  padding-left: 5px;
+  width: 224px;
+  overflow: hidden;
+}
+
+.form__label {
+  order: -1;
+  margin-right: 8px;
+}
+
+.form__fieldset {
+  border: 0;
+  padding: 0;
+  margin: 0;
+}
+
+.form__reset-button-wrapper {
+  position: relative;
+  left: -18px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 20px;
+  height: 16px;
+}
+
+.form__reset-button,
+.form__reset-button::before,
+.form__reset-button::after {
+  background-color: $main-black;
+  position: absolute;
+  left: 25%;
+}
+
+.form__reset-button {
+  height: 0;
+  width: 0;
+  padding: 0;
+
+  &::before,
+  &::after {
+    content: "";
+    display: block;
+    width: 10px;
+    height: 1.5px;
+  }
+
+  &::before {
+    transform: rotate(45deg);
+  }
+
+  &::after {
+    transform: rotate(-45deg);
+  }
+}

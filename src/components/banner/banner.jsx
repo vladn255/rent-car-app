@@ -1,3 +1,7 @@
+import { Link } from 'react-router-dom';
+
+import { RoutePath } from "../../const";
+
 const Banner = () => {
     return (
         <section className="banner">
@@ -5,7 +9,7 @@ const Banner = () => {
             <p className="banner__text">
                 Поминутная аренда авто твоего города
             </p>
-            <button className="button button--banner">Забронировать</button>
+            <Link to={RoutePath.ORDER} className="button button--banner">Забронировать</Link>
         </section>
     )
 }

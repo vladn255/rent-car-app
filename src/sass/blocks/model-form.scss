@@ -1,0 +1,23 @@
+.model-form {
+  overflow-y: auto;
+}
+
+.model-form__wrapper {
+  display: grid;
+  grid-template-areas:
+    "radio"
+    "gallery";
+
+  grid-template-rows: min-content 1fr;
+
+  width: 736px;
+}
+
+.model-form__fieldset {
+  grid-area: radio;
+}
+
+.model-form__gallery {
+  grid-area: gallery;
+  overflow: auto;
+}

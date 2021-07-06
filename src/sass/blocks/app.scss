@@ -1,7 +1,7 @@
 .app {
   display: flex;
   flex-direction: row;
-  min-height: $min-height-default;
+  height: $min-height-default;
   width: 100vw;
   max-width: $desktop-width;
   min-width: $mobile-width;

@@ -1,0 +1,57 @@
+.receipt {
+  padding-top: 32px;
+  margin-bottom: 32px;
+}
+
+.receipt__title {
+  margin: 0;
+  text-align: end;
+  margin-bottom: 26px;
+}
+
+.receipt__list {
+  margin: 0;
+  padding: 0;
+  margin-bottom: 32px;
+}
+
+.receipt__item {
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-end;
+
+  &::after {
+    content: "";
+    display: block;
+    position: absolute;
+    z-index: 1;
+    width: 100%;
+    height: 5px;
+    border-bottom: 2px dotted $grey-dark;
+    bottom: 2px;
+  }
+}
+
+.receipt__key {
+  background-color: $bg-white;
+  position: relative;
+  z-index: 2;
+
+  padding-right: 12px;
+}
+
+.receipt__value {
+  background-color: $bg-white;
+  color: $grey-dark;
+  text-align: end;
+  position: relative;
+  z-index: 2;
+
+  padding-left: 11px;
+}
+
+.receipt__cost {
+  margin: 0;
+}

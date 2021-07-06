@@ -1,0 +1,42 @@
+.order-nav {
+  display: flex;
+  flex-direction: row;
+
+  border-top: 1px solid $grey-light;
+  border-bottom: 1px solid $grey-light;
+
+  margin: 0;
+  padding: 0;
+  padding-top: 8px;
+  padding-bottom: 8px;
+}
+
+.order-nav__item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-right: 16px;
+
+  &:not(:last-of-type) {
+    &::after {
+      content: "";
+      display: block;
+      width: 6px;
+      height: 8px;
+      border-left: 6px solid $grey-dark;
+      border-top: 6px solid transparent;
+      border-bottom: 6px solid transparent;
+      margin-left: 16px;
+    }
+  }
+}
+
+.order-nav__button {
+  font-weight: bold;
+  color: $grey-dark;
+  background-color: transparent;
+}
+
+.order-nav__button--active {
+  color: $main-accent-green;
+}

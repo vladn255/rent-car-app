@@ -30,7 +30,13 @@ const LANGUAGES = {
     eng: 'Eng'
 }
 
+const RoutePath = {
+    MAIN: '/rent-car-app',
+    ORDER: '/order'
+}
+
 export {
     SLIDES_INFO,
-    LANGUAGES
+    LANGUAGES,
+    RoutePath
 }
