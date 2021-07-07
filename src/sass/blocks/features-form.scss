@@ -1,0 +1,59 @@
+.features-form__wrapper {
+  padding-top: 32px;
+}
+
+.features-form__fieldset {
+  margin: 0;
+  margin-bottom: 32px;
+}
+
+.features-form__legend {
+  margin-bottom: 15px;
+}
+
+.features-form__list {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.features-form__item {
+  position: relative;
+  margin-right: 16px;
+}
+
+.features-form__list--color {
+  flex-direction: row;
+  align-items: center;
+
+  .features-form__item {
+    margin-right: 8px;
+  }
+}
+
+.features-form__fieldset--date {
+  margin-bottom: 20px;
+}
+
+.features-form__fieldset--rate {
+  margin-bottom: 25px;
+}
+
+.features-form__list--date {
+  width: 250px;
+
+  .features-form__item {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-bottom: 13px;
+  }
+}
+
+.features-form__list--rate,
+.features-form__list--additional {
+  .features-form__item {
+    margin-bottom: 8px;
+  }
+}

@@ -12,10 +12,11 @@
   width: 100%;
   margin-left: 64px;
   padding-left: 64px;
+  padding-right: 64px;
 
   .main-header {
     padding-top: 32px;
-    margin-bottom: 10px;
+    margin-bottom: 28px;
   }
 }
 
@@ -27,7 +28,7 @@
   grid-area: content;
   display: flex;
   flex-direction: column;
-  justify-content: start;
+  justify-content: flex-start;
 
   overflow-y: hidden;
 }
@@ -44,7 +45,6 @@
   width: $mobile-width;
   height: 100%;
   padding-left: 32px;
-  margin-right: 64px;
 
   border-left: 1px solid $grey-light;
 }

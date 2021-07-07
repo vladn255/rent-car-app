@@ -5,18 +5,18 @@ const LocationForm = () => {
     return (
         <form className="order-page__form location-form form">
             <div className="location-form__wrapper">
-                <fieldset className="order-page__fieldset location-form__fieldset form__fieldset">
+                <fieldset className="location-form__fieldset form__fieldset">
                     <legend className="visually-hidden">Форма выбора местоположения</legend>
                     <ul className="location-form__list">
                         <li className="location-form__item">
-                            <input className="location-form__input form__input form__input--city" name="city" id="city" value="Ульяновск" placeholder="Начните вводить город"></input>
+                            <input className="location-form__input form__input" name="city" id="city" value="Ульяновск" placeholder="Начните вводить город"></input>
                             <label className="location-form__label form__label" htmlFor="city">Город</label>
                             <div className="form__reset-button-wrapper">
                                 <button className="location-form__button form__reset-button" type="button"></button>
                             </div>
                         </li>
                         <li className="location-form__item">
-                            <input className="location-form__input form__input form__input--pickpoint" name="pickpoint" id="pickpoint" value="" placeholder="Начните вводить пункт ..."></input>
+                            <input className="location-form__input form__input" name="pickpoint" id="pickpoint" value="" placeholder="Начните вводить пункт ..."></input>
                             <label className="location-form__label form__label" htmlFor="pickpoint">Пункт выдачи</label>
                             <div className="form__reset-button-wrapper">
                                 <button className="location-form__button form__reset-button" type="button"></button>

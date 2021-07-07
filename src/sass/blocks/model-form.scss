@@ -11,10 +11,30 @@
   grid-template-rows: min-content 1fr;
 
   width: 736px;
+  padding-top: 32px;
 }
 
 .model-form__fieldset {
   grid-area: radio;
+  margin: 0;
+  margin-bottom: 47px;
+}
+
+.model-form__list {
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.model-form__item {
+  margin-right: 8px;
+}
+
+.model-form__input {
+  width: 20px;
 }
 
 .model-form__gallery {

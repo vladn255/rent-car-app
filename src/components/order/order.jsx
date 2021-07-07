@@ -1,7 +1,9 @@
-// import LocationForm from "../location-form/location-form";
+import FeaturesForm from "../features-form/features-form";
+import LocationForm from "../location-form/location-form";
 import MainHeader from "../main-header/main-header";
 import ModelForm from "../model-form/model-form";
 import OrderNav from "../order-nav/order-nav";
+import ResultForm from "../result-form/result-form";
 
 const Order = () => {
     return (
@@ -11,7 +13,9 @@ const Order = () => {
             <section className="order-page__content">
                 <OrderNav />
                 {/* <LocationForm /> */}
-                <ModelForm />
+                {/* <ModelForm /> */}
+                {/* <FeaturesForm /> */}
+                <ResultForm />
             </section>
         </main>
     )
