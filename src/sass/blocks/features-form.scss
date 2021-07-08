@@ -21,6 +21,16 @@
 .features-form__item {
   position: relative;
   margin-right: 16px;
+
+  @media (max-width: $mobile-width) {
+    font-size: 12px;
+    line-height: 14px;
+  }
+}
+
+.features-form__legend {
+  font-size: 12px;
+  line-height: 14px;
 }
 
 .features-form__list--color {

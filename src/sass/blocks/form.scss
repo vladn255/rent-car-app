@@ -16,8 +16,8 @@
 }
 
 .form__reset-button-wrapper {
-  position: relative;
-  left: -25px;
+  position: absolute;
+  right: 0;
   cursor: pointer;
   display: flex;
   justify-content: center;

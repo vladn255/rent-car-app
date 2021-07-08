@@ -3,7 +3,7 @@ import OrderReceipt from "../order-receipt/order-receipt.jsx";
 const ResultForm = () => {
     return (
         <div className="order-page__form result">
-            <div className="result__container">
+            <div className="order-page__form-wrapper result__container">
                 <h3 className="visually-hidden">Детали заказа</h3>
                 <div className="result__wrapper">
                     <p className="result__model">Hyndai, i30 N</p>

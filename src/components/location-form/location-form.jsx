@@ -4,7 +4,7 @@ import OrderReceipt from "../order-receipt/order-receipt.jsx";
 const LocationForm = () => {
     return (
         <form className="order-page__form location-form form">
-            <div className="location-form__wrapper">
+            <div className="order-page__form-wrapper location-form__wrapper">
                 <fieldset className="location-form__fieldset form__fieldset">
                     <legend className="visually-hidden">Форма выбора местоположения</legend>
                     <ul className="location-form__list">
@@ -18,9 +18,9 @@ const LocationForm = () => {
                         <li className="location-form__item">
                             <input className="location-form__input form__input" name="pickpoint" id="pickpoint" value="" placeholder="Начните вводить пункт ..."></input>
                             <label className="location-form__label form__label" htmlFor="pickpoint">Пункт выдачи</label>
-                            <div className="form__reset-button-wrapper">
+                            {/* <div className="form__reset-button-wrapper">
                                 <button className="location-form__button form__reset-button" type="button"></button>
-                            </div>
+                            </div> */}
                         </li>
                     </ul>
                 </fieldset>

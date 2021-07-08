@@ -10,7 +10,6 @@
 
   grid-template-rows: min-content 1fr;
 
-  width: 736px;
   padding-top: 32px;
 }
 
@@ -31,6 +30,11 @@
 
 .model-form__item {
   margin-right: 8px;
+
+  @media (max-width: $mobile-width) {
+    font-size: 12px;
+    line-height: 14px;
+  }
 }
 
 .model-form__input {

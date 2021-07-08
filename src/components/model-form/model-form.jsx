@@ -3,7 +3,7 @@ import OrderReceipt from "../order-receipt/order-receipt.jsx";
 const ModelForm = () => {
     return (
         <form className="order-page__form model-form form">
-            <div className="model-form__wrapper">
+            <div className="order-page__form-wrapper model-form__wrapper">
                 <fieldset className="model-form__fieldset form__fieldset">
                     <legend className="visually-hidden">Форма выбора модели</legend>
                     <ul className="model-form__list">

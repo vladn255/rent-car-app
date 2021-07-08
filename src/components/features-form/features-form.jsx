@@ -3,7 +3,7 @@ import OrderReceipt from "../order-receipt/order-receipt.jsx";
 const FeaturesForm = () => {
     return (
         <form className="order-page__form features-form form">
-            <div className="features-form__wrapper">
+            <div className="order-page__form-wrapper features-form__wrapper">
                 <fieldset className="features-form__fieldset features-form__fieldset--color form__fieldset">
                     <legend className="features-form__legend form__legend">Цвет</legend>
                     <ul className="features-form__list features-form__list--color">
@@ -35,9 +35,9 @@ const FeaturesForm = () => {
                         <li className="features-form__item">
                             <input className="features-form__input form__input" name="date-to" id="date-to" value="" placeholder="Введите дату и время"></input>
                             <label className="features-form__label form__label" htmlFor="date-to">По</label>
-                            <div className="form__reset-button-wrapper">
+                            {/* <div className="form__reset-button-wrapper">
                                 <button className="features-form__button form__reset-button" type="button"></button>
-                            </div>
+                            </div> */}
                         </li>
                     </ul>
                 </fieldset>
