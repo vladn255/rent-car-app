@@ -11,8 +11,6 @@ const Slider = () => {
         <Swiper
             navigation
             pagination={{ clickable: false }}
-            onSlideChange={() => console.log('slide change')}
-            onSwiper={(swiper) => console.log(swiper)}
             wrapperTag={'ul'}
             tag={'section'}
         >

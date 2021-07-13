@@ -1,0 +1,121 @@
+.form__input {
+  border: none;
+  border-bottom: 1px solid $grey-dark;
+  padding-left: 5px;
+  overflow: hidden;
+}
+
+.form__label {
+  order: -1;
+  margin-right: 8px;
+}
+
+.form__fieldset {
+  border: 0;
+  padding: 0;
+}
+
+.form__reset-button-wrapper {
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  width: 20px;
+  height: 16px;
+}
+
+.form__reset-button,
+.form__reset-button::before,
+.form__reset-button::after {
+  background-color: $main-black;
+  position: absolute;
+  left: 25%;
+}
+
+.form__reset-button {
+  height: 0;
+  width: 0;
+  padding: 0;
+
+  &::before,
+  &::after {
+    content: "";
+    display: block;
+    width: 10px;
+    height: 1.5px;
+  }
+
+  &::before {
+    transform: rotate(45deg);
+  }
+
+  &::after {
+    transform: rotate(-45deg);
+  }
+}
+
+.form__label--radio {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+  color: $grey-dark;
+
+  &::before {
+    content: "";
+    display: block;
+    width: 12px;
+    height: 12px;
+    border: 1px solid $grey-dark;
+    border-radius: 50%;
+    margin-right: 8px;
+  }
+}
+
+.form__input--radio:checked + .form__label--radio {
+  color: $main-black;
+
+  &::before {
+    border: 3px solid $main-accent-green;
+  }
+}
+
+.form__label--checkbox {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  position: relative;
+  z-index: 1;
+  color: $grey-dark;
+
+  &::before {
+    content: "";
+    display: block;
+    width: 12px;
+    height: 12px;
+    border: 1px solid $grey-dark;
+    margin-right: 8px;
+  }
+}
+
+.form__input--checkbox:checked ~ .form__label--checkbox {
+  color: $main-black;
+
+  &::before {
+    border-color: $main-accent-green;
+  }
+}
+
+.form__input--checkbox:checked ~ .form__label-tick {
+  &::before {
+    position: absolute;
+    content: url("../../img/icons/tick-icon.svg");
+    top: 0;
+    left: 2px;
+    width: 15px;
+    height: 15px;
+  }
+}

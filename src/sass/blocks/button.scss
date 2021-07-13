@@ -3,6 +3,8 @@
   background-blend-mode: darken;
   border-radius: 8px;
   color: $font-white;
+  font-size: 18px;
+  line-height: 21px;
   text-align: center;
 
   &:hover,
@@ -15,15 +17,16 @@
   }
 
   &:disabled {
-    background-color: $bg-white;
+    background: $bg-grey-light;
   }
 }
 
 .button--banner {
   width: 250px;
   min-height: 48px;
-  font-size: 18px;
-  line-height: 21px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   @media (max-width: $mobile-width) {
     position: absolute;
@@ -40,8 +43,6 @@
   justify-content: center;
   align-items: center;
   border-radius: 4px;
-  font-size: 18px;
-  line-height: 21px;
   width: 164px;
   min-height: 48px;
 }
@@ -60,4 +61,18 @@
 
 .button--purple {
   background: linear-gradient(90deg, #281349 0%, #720c7b 100%);
+}
+
+.button--submit {
+  width: 287px;
+  min-height: 48px;
+  padding: 0;
+
+  @media (max-width: $tablet-width) {
+    margin: auto;
+  }
+
+  @media (max-width: $mobile-width) {
+    width: 260px;
+  }
 }

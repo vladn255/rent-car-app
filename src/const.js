@@ -28,9 +28,36 @@ const SLIDES_INFO = [
 const LANGUAGES = {
     rus: 'Рус',
     eng: 'Eng'
+};
+
+const RoutePath = {
+    MAIN: '/rent-car-app',
+    ORDER: '/order'
+};
+
+const Tabs = new Map([
+    ['LOCATION', 'location'],
+    ['MODEL', 'model'],
+    ['ADDITIONS', 'additions'],
+    ['RESULT', 'result']
+]);
+
+const TabNames = {
+    location: 'Местоположение',
+    model: 'Модель',
+    additions: 'Дополнительно',
+    result: 'Итого'
+};
+
+const ActionType = {
+    CHANGE_TAB: "changeTab"
 }
 
 export {
     SLIDES_INFO,
-    LANGUAGES
+    LANGUAGES,
+    RoutePath,
+    Tabs,
+    TabNames,
+    ActionType
 }
