@@ -1,4 +1,4 @@
-import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 
 import { RoutePath } from '../../const.js';
 
@@ -9,20 +9,17 @@ import Order from "../order/order.jsx";
 function App() {
     return (
         <div className="app">
-            <BrowserRouter>
-                <Switch>
-                    <Route exact path={RoutePath.MAIN}>
-                        <MainNav />
-                        <Main />
-                    </Route>
-                </Switch>
-
-                <Route exact path={RoutePath.ORDER}>
+            <Switch>
+                <Route exact path={RoutePath.MAIN}>
                     <MainNav />
-                    <Order />
+                    <Main />
                 </Route>
-            </BrowserRouter>
+            </Switch>
 
+            <Route exact path={RoutePath.ORDER}>
+                <MainNav />
+                <Order />
+            </Route>
         </div>
     );
 }

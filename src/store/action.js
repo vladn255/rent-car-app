@@ -1,15 +1,10 @@
-const ActionType = {
-    CHANGE_TAB: "changeTab"
-}
+import { ActionType } from "../const";
+const changeTab = (tab) => ({
+    type: ActionType.CHANGE_TAB,
+    payload: tab
+})
 
-const ActionCreator = {
-    changeTab: (tab) => ({
-        type: ActionType.CHANGE_TAB,
-        payload: tab
-    })
-}
 
 export {
-    ActionType,
-    ActionCreator
+    changeTab
 }

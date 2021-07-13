@@ -1,20 +1,20 @@
-import { connect } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { Tabs } from "../../const.js";
-import { ActionCreator } from "../../store/action";
+import { changeTab } from "../../store/action";
 
 import OrderNavItem from "../order-nav-item/order-nav-item.jsx";
 
 
-const OrderNav = ({ activeTab, onChangeTab }) => {
+const OrderNav = ({ activeTab }) => {
 
+    const dispatch = useDispatch();
     let isTabDisabled = false;
     let orderNavList = [];
 
     const tabButtonClickHandler = (evt) => {
         evt.preventDefault();
-        onChangeTab(evt.target.closest(".order-nav__item").dataset.tab);
-
+        dispatch(changeTab(evt.target.closest(".order-nav__item").dataset.tab));
     }
 
     for (const [, value] of Tabs) {
@@ -33,10 +33,4 @@ const OrderNav = ({ activeTab, onChangeTab }) => {
     )
 }
 
-const mapDispatchToProps = (dispatch) => ({
-    onChangeTab(tab) {
-        dispatch(ActionCreator.changeTab(tab))
-    }
-})
-
-export default connect(null, mapDispatchToProps)(OrderNav);
+export default OrderNav;

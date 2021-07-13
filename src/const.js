@@ -49,10 +49,15 @@ const TabNames = {
     result: 'Итого'
 };
 
+const ActionType = {
+    CHANGE_TAB: "changeTab"
+}
+
 export {
     SLIDES_INFO,
     LANGUAGES,
     RoutePath,
     Tabs,
-    TabNames
+    TabNames,
+    ActionType
 }

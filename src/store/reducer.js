@@ -1,5 +1,4 @@
-import { ActionType } from "./action.js";
-import { Tabs } from "../const.js";
+import { ActionType, Tabs } from "../const.js";
 
 const initialState = {
     activeTab: Tabs.get('LOCATION')

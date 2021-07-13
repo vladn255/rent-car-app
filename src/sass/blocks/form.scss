@@ -110,12 +110,12 @@
 }
 
 .form__input--checkbox:checked ~ .form__label-tick {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 15px;
-  height: 15px;
-  background-image: url("../../img/icons/tick-icon.svg");
-  background-repeat: no-repeat;
-  background-position: left 2px bottom 3px;
+  &::before {
+    position: absolute;
+    content: url("../../img/icons/tick-icon.svg");
+    top: 0;
+    left: 2px;
+    width: 15px;
+    height: 15px;
+  }
 }
