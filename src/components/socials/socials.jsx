@@ -1,3 +1,5 @@
+import React from "react";
+
 const Socials = () => {
     return (
         <ul className="main-nav__socials socials">

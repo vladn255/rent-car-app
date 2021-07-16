@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import leaflet from "leaflet";
 import "leaflet/dist/leaflet.css";
 
@@ -10,6 +10,7 @@ const LOCATION = [54.3112, 48.3656];
 const Map = () => {
     const mapRef = useRef();
     const customIcon = leaflet.icon({
+        // eslint-disable-next-line no-undef
         iconUrl: `${process.env.PUBLIC_URL}/img/map-pin.svg`,
 
         iconSize: [18, 18]
@@ -35,7 +36,7 @@ const Map = () => {
                 .addTo(mapRef.current);
         })
 
-    });
+    }, []);
 
     return (
         <div id="map" style={{ height: `352px`, width: `100%` }} ref={mapRef}></div>

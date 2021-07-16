@@ -1,90 +1,84 @@
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { Tabs, ModelTypes } from "../../const.js";
+import { setModel, setActiveFilter } from "../../store/action";
+import { Models } from "../../mocks.js";
+import ModelFormItem from "../model-form-item/model-form-item.jsx";
+
 import OrderReceipt from "../order-receipt/order-receipt.jsx";
+import TabFormButton from "../tab-form-button/tab-form-button";
+import RadioInput from "../radio-input/radio-input.jsx";
+
+const ModelFormRadios = [
+    {
+        name: ModelTypes.ALL_MODELS,
+        form: "model-type",
+        label: "Все модели"
+    },
+    {
+        name: ModelTypes.ECONOMY,
+        form: "model-type",
+        label: "Эконом"
+    },
+    {
+        name: ModelTypes.PREMIUM,
+        form: "model-type",
+        label: "Премиум"
+    },
+]
+
+const BUTTON_LABEL = "Дополнительно";
 
 const ModelForm = () => {
+    const [isValid, setIsValid] = useState(false);
+    const [currentModel, setCurrentModel] = useState(useSelector((state) => state.model));
+    const [currentFilter, setCurrentFilter] = useState(useSelector((state) => state.activeFilter));
+
+    const setModelValue = (modelValue) => setCurrentModel(modelValue);
+
+    const setCurrentFilterValue = (filter) => setCurrentFilter(filter);
+
+    const checkIsValid = () => {
+        return isValid !== (currentModel !== null)
+            ? setIsValid(currentModel !== null)
+            : isValid
+    }
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        setCurrentFilter(currentFilter);
+        setCurrentModel(currentModel);
+        checkIsValid();
+        dispatch(setModel(currentModel));
+        dispatch(setActiveFilter(currentFilter));
+    }, [currentModel, currentFilter])
+
     return (
         <form className="model-form form">
             <div className="order-page__form">
                 <div className="order-page__form-wrapper model-form__wrapper">
-                    <fieldset className="model-form__fieldset form__fieldset">
+                    <fieldset className="model-form__fieldset form__fieldset" >
                         <legend className="visually-hidden">Форма выбора модели</legend>
                         <ul className="model-form__list">
-                            <li className="model-form__item">
-                                <input className="model-form__input form__input form__input--radio visually-hidden" type="radio" name="model-type" id="all-models" value="all-models" checked></input>
-                                <label className="model-form__label form__label form__label--radio" htmlFor="all-models">Все модели</label>
-                            </li>
-                            <li className="model-form__item">
-                                <input className="model-form__input form__input form__input--radio visually-hidden" type="radio" name="model-type" id="economy" value="economy"></input>
-                                <label className="model-form__label form__label form__label--radio" htmlFor="economy">Эконом</label>
-                            </li>
-                            <li className="model-form__item">
-                                <input className="model-form__input form__input form__input--radio visually-hidden" type="radio" name="model-type" id="premium" value="premium"></input>
-                                <label className="model-form__label form__label form__label--radio" htmlFor="premium">Премиум</label>
-                            </li>
+                            {ModelFormRadios.map(({ name, form, label }) =>
+                                <li className="model-form__item" key={name}>
+                                    <RadioInput key={name} name={name} form={form} label={label} setCurrentFilterValue={setCurrentFilterValue} currentFilter={currentFilter} />
+                                </li>
+                            )}
                         </ul>
                     </fieldset>
 
                     <div className="order-page__selection model-form__gallery gallery">
-                        <article className="gallery__item">
-                            <button className="gallery__model-wrapper" type="button">
-                                <h4 className="gallery__title">ELANTRA</h4>
-                                <p className="gallery__text">12 000 - 25 000 ₽</p>
-                                <img className="gallery__picture" src={`${process.env.PUBLIC_URL}/img/gallery/image1.png`}
-                                    alt="ELANTRA view" width="256" height="116" />
-                            </button>
-                        </article>
-
-                        <article className="gallery__item">
-                            <button className="gallery__model-wrapper gallery__model-wrapper--visited" type="button">
-                                <h4 className="gallery__title">i30 N</h4>
-                                <p className="gallery__text">10 000 - 32 000 ₽</p>
-                                <img className="gallery__picture" src={`${process.env.PUBLIC_URL}/img/gallery/image2.png`}
-                                    alt="i30 N view" width="256" height="116" />
-                            </button>
-                        </article>
-
-                        <article className="gallery__item">
-                            <button className="gallery__model-wrapper" type="button">
-                                <h4 className="gallery__title">CRETA</h4>
-                                <p className="gallery__text">12 000 - 25 000 ₽</p>
-                                <img className="gallery__picture" src={`${process.env.PUBLIC_URL}/img/gallery/image3.png`}
-                                    alt="CRETA view" width="256" height="116" />
-                            </button>
-                        </article>
-
-                        <article className="gallery__item">
-                            <button className="gallery__model-wrapper" type="button">
-                                <h4 className="gallery__title">ELANTRA</h4>
-                                <p className="gallery__text">12 000 - 25 000 ₽</p>
-                                <img className="gallery__picture" src={`${process.env.PUBLIC_URL}/img/gallery/image1.png`}
-                                    alt="ELANTRA view" width="256" height="116" />
-                            </button>
-                        </article>
-
-                        <article className="gallery__item">
-                            <button className="gallery__model-wrapper" type="button">
-                                <h4 className="gallery__title">i30 N</h4>
-                                <p className="gallery__text">10 000 - 32 000 ₽</p>
-                                <img className="gallery__picture" src={`${process.env.PUBLIC_URL}/img/gallery/image2.png`}
-                                    alt="i30 N view" width="256" height="116" />
-                            </button>
-                        </article>
-
-                        <article className="gallery__item">
-                            <button className="gallery__model-wrapper" type="button">
-                                <h4 className="gallery__title">CRETA</h4>
-                                <p className="gallery__text">12 000 - 25 000 ₽</p>
-                                <img className="gallery__picture" src={`${process.env.PUBLIC_URL}/img/gallery/image3.png`}
-                                    alt="CRETA view" width="256" height="116" />
-                            </button>
-                        </article>
-
+                        {Models.map(({ name, cost, imgSrc }) => <ModelFormItem key={Math.random() * 10000} name={name} cost={cost} imgSrc={imgSrc} isActive={name === currentModel} setModelValue={setModelValue} />)}
 
                     </div>
                 </div>
 
                 <div className="order-page__receipt-wrapper">
                     <OrderReceipt />
-                    <button className="button button--submit" type="submit" disabled>Дополнительно</button>
+                    <TabFormButton tab={Tabs.get('ADDITIONS')} isValid={isValid} label={BUTTON_LABEL} />
                 </div>
             </div>
         </form>

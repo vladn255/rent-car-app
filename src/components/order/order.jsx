@@ -1,4 +1,6 @@
+import React from "react";
 import { connect } from "react-redux";
+import PropTypes from 'prop-types';
 
 import { Tabs } from "../../const.js";
 
@@ -36,6 +38,10 @@ const Order = ({ activeTab }) => {
             </section>
         </main>
     )
+}
+
+Order.propTypes = {
+    activeTab: PropTypes.string.isRequired
 }
 
 const mapStateToProps = ({ activeTab }) => ({

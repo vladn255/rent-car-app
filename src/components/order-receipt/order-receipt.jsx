@@ -1,3 +1,4 @@
+import React from "react";
 import { RECEIPT } from "../../mocks";
 
 const OrderReceipt = () => {

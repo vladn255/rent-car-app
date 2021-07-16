@@ -32,7 +32,8 @@ const LANGUAGES = {
 
 const RoutePath = {
     MAIN: '/rent-car-app',
-    ORDER: '/order'
+    ORDER: '/order',
+    CHECKOUT: '/checkout'
 };
 
 const Tabs = new Map([
@@ -50,7 +51,37 @@ const TabNames = {
 };
 
 const ActionType = {
-    CHANGE_TAB: "changeTab"
+    CHANGE_TAB: "changeTab",
+    SET_LOCATION: "setLocation",
+    SET_MODEL: "setModel",
+    SET_ACTIVE_FILTER: "setActiveFilter",
+    SET_COLOR: "setColor",
+    SET_DATE: "setDate",
+    SET_RATE: "setRate",
+    SET_ADDITIONS: "setAdditions",
+};
+
+const ModelTypes = {
+    ALL_MODELS: "all-models",
+    ECONOMY: "economy",
+    PREMIUM: "premium"
+};
+
+const Colors = {
+    ALL_COLOR: "all-color",
+    RED: "red",
+    BLUE: "blue"
+}
+
+const Rates = {
+    BY_MINUTE: "by-minute",
+    BY_DAY: "by-day"
+}
+
+const Additionals = {
+    FULL_TANK: "full-tank",
+    CHILD_SEAT: "child-seat",
+    RIGHT_WHEEL: "right-wheel"
 }
 
 export {
@@ -59,5 +90,9 @@ export {
     RoutePath,
     Tabs,
     TabNames,
-    ActionType
+    ActionType,
+    ModelTypes,
+    Colors,
+    Rates,
+    Additionals
 }

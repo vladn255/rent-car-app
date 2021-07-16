@@ -1,3 +1,9 @@
+/* eslint-disable no-undef */
+import React from "react";
+import { Link } from "react-router-dom";
+
+import { RoutePath } from "../../const.js";
+
 import OrderReceipt from "../order-receipt/order-receipt.jsx";
 
 const ResultForm = () => {
@@ -17,9 +23,12 @@ const ResultForm = () => {
 
             <div className="order-page__receipt-wrapper">
                 <OrderReceipt />
-                <button className="button button--submit" type="submit" disabled>Заказать</button>
+                <button className="button button--submit" type="button">Заказать</button>
             </div>
 
+            <div className="modal modal--closed">
+                <Link to={RoutePath.CHECKOUT} className="button button--submit">Подтвердить</Link>
+            </div>
         </div>
     )
 }
