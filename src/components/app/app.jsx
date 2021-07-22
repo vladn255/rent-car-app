@@ -1,3 +1,4 @@
+import React from "react";
 import { Switch, Route } from 'react-router-dom';
 
 import { RoutePath } from '../../const.js';
@@ -5,6 +6,7 @@ import { RoutePath } from '../../const.js';
 import MainNav from "../main-nav/main-nav.jsx";
 import Main from "../main/main.jsx";
 import Order from "../order/order.jsx";
+import Checkout from "../checkout/checkout.jsx";
 
 function App() {
     return (
@@ -19,6 +21,11 @@ function App() {
             <Route exact path={RoutePath.ORDER}>
                 <MainNav />
                 <Order />
+            </Route>
+
+            <Route exact path={RoutePath.CHECKOUT}>
+                <MainNav />
+                <Checkout />
             </Route>
         </div>
     );

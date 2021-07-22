@@ -1,3 +1,5 @@
+import React from "react";
+
 import SwiperCore, { Navigation, Pagination } from 'swiper';
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -17,7 +19,8 @@ const Slider = () => {
             {SLIDES_INFO.map((slide) => {
                 return (
                     <SwiperSlide tag={'li'} key={`slide-${slide.title}`}>
-                        <article className="slider__article" style={{ background: `linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%), url(${process.env.PUBLIC_URL}${slide.imgURL})`}}>
+                        {/* eslint-disable-next-line no-undef */}
+                        <article className="slider__article" style={{ background: `linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, #000000 100%), url(${process.env.PUBLIC_URL}${slide.imgURL})` }}>
                             <div className="slider__wrapper">
                                 <h3 className="slider__title">{slide.title}</h3>
                                 <p className="slider__text">{slide.text}</p>

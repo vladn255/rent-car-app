@@ -1,6 +1,131 @@
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+
+import { Tabs, Colors, Rates, Additionals } from "../../const.js";
+import { setColor, setDate, setRate, setAdditions } from "../../store/action";
+
 import OrderReceipt from "../order-receipt/order-receipt.jsx";
+import TabFormButton from "../tab-form-button/tab-form-button.jsx";
+import TextInput from "../text-input/text-input.jsx";
+import RadioInput from "../radio-input/radio-input.jsx";
+import CheckboxInput from "../checkbox-input/checkbox-input.jsx";
+
+const ColorRadios = [
+    {
+        name: Colors.ALL_COLOR,
+        form: "color",
+        label: "Любой"
+    },
+    {
+        name: Colors.RED,
+        form: "color",
+        label: "Красный"
+    },
+    {
+        name: Colors.BLUE,
+        form: "color",
+        label: "Голубой"
+    }
+];
+
+const RatesRadios = [
+    {
+        name: Rates.BY_MINUTE,
+        form: "rate",
+        label: "Поминутно, 7₽/мин"
+    },
+    {
+        name: Rates.BY_DAY,
+        form: "rate",
+        label: "На сутки, 1999₽/мин"
+    }
+];
+
+const DateInputs = [
+    {
+        name: "dateStart",
+        additionalClass: "features",
+        placeholder: "Введите дату и время",
+        label: "С"
+    },
+    {
+        name: "dateFinish",
+        additionalClass: "features",
+        placeholder: "Введите дату и время",
+        label: "По"
+    }
+];
+
+const AdditionalsCheckboxes = [
+    {
+        name: Additionals.FULL_TANK,
+        form: "features",
+        label: "Полный бак, 500₽"
+    },
+    {
+        name: Additionals.CHILD_SEAT,
+        form: "features",
+        label: "Детское кресло, 200₽"
+    },
+    {
+        name: Additionals.RIGHT_WHEEL,
+        form: "features",
+        label: "Правый руль, 1600₽"
+    },
+]
+
+const BUTTON_LABEL = "Итого";
 
 const FeaturesForm = () => {
+    const [isValid, setIsValid] = useState(false);
+    const [currentColor, setCurrentColor] = useState(useSelector((state) => state.color));
+    const [currentDateData, setCurrentDate] = useState({
+        dateStart: useSelector((state) => state.dateStart),
+        dateFinish: useSelector((state) => state.dateFinish)
+    });
+    const [currentRate, setCurrentRate] = useState(useSelector((state) => state.rate));
+    const [additionsList, setAdditionsList] = useState(useSelector((state) => state.additions));
+
+    const setColorValue = (color) => {
+        setCurrentColor(color)
+        console.log('color', color, currentColor)
+    };
+    const setDateStartValue = (dateValue) => {
+        setCurrentDate({ ...currentDateData, [dateValue.name]: dateValue.value });
+    }
+    const setRateValue = (rate) => {
+        setCurrentRate(rate);
+        console.log('rate', rate, currentRate)
+    }
+    const setAdditionsValue = (feature) => {
+        const index = additionsList.indexOf(feature);
+        additionsList.includes(feature)
+            ? additionsList.splice(index, 1)
+            : additionsList.push(feature)
+    }
+
+    const checkIsValid = () => {
+        return isValid !== (currentDateData.dateStart.length !== 0 && currentDateData.dateFinish.length !== 0)
+            ? setIsValid(currentDateData.dateStart.length !== 0 && currentDateData.dateFinish.length !== 0)
+            : isValid
+    };
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        setCurrentColor(currentColor);
+        setCurrentDate(currentDateData);
+        setCurrentRate(currentRate);
+        setAdditionsList(additionsList);
+
+        checkIsValid();
+
+        dispatch(setColor(currentColor));
+        dispatch(setDate(currentDateData));
+        dispatch(setRate(currentRate));
+        dispatch(setAdditions(additionsList));
+    }, [currentColor, currentDateData, currentRate, additionsList])
+
     return (
         <form className=" features-form form">
             <div className="order-page__form">
@@ -8,79 +133,49 @@ const FeaturesForm = () => {
                     <fieldset className="features-form__fieldset features-form__fieldset--color form__fieldset">
                         <legend className="features-form__legend form__legend">Цвет</legend>
                         <ul className="features-form__list features-form__list--color">
-                            <li className="features-form__item">
-                                <input className="features-form__input form__input form__input--radio visually-hidden" type="radio" name="color" id="all-color" value="all-color" ></input>
-                                <label className="features-form__label form__label form__label--radio" htmlFor="all-color">Любой</label>
-                            </li>
-                            <li className="features-form__item">
-                                <input className="features-form__input form__input form__input--radio visually-hidden" type="radio" name="color" id="red" value="red"></input>
-                                <label className="features-form__label form__label form__label--radio" htmlFor="red">Красный</label>
-                            </li>
-                            <li className="features-form__item">
-                                <input className="features-form__input form__input form__input--radio visually-hidden" type="radio" name="color" id="blue" value="blue" checked></input>
-                                <label className="features-form__label form__label form__label--radio" htmlFor="blue">Голубой</label>
-                            </li>
+                            {ColorRadios.map(({ name, form, label }) =>
+                                <li className="features-form__item" key={name}>
+                                    <RadioInput key={name} name={name} form={form} label={label} setCurrentFilterValue={setColorValue} currentFilter={currentColor} />
+                                </li>
+                            )}
                         </ul>
                     </fieldset>
 
                     <fieldset className="features-form__fieldset features-form__fieldset--date form__fieldset">
                         <legend className="features-form__legend form__legend">Дата аренды</legend>
                         <ul className="features-form__list features-form__list--date">
-                            <li className="features-form__item">
-                                <input className="features-form__input form__input" name="date-from" id="date-from" value="12.06.2019 12:00" placeholder="Введите дату и время"></input>
-                                <label className="features-form__label form__label" htmlFor="city">С</label>
-                                <div className="form__reset-button-wrapper">
-                                    <button className="features-form__button form__reset-button" type="button"></button>
-                                </div>
-                            </li>
-                            <li className="features-form__item">
-                                <input className="features-form__input form__input" name="date-to" id="date-to" value="" placeholder="Введите дату и время"></input>
-                                <label className="features-form__label form__label" htmlFor="date-to">По</label>
-                                {/* <div className="form__reset-button-wrapper">
-                                <button className="features-form__button form__reset-button" type="button"></button>
-                            </div> */}
-                            </li>
+                            {DateInputs.map((input) =>
+                                <li className="features-form__item" key={input.name}>
+                                    <TextInput setLocationDataValue={setDateStartValue} inputInfo={input} value={currentDateData[input.name]} />
+                                </li>)}
                         </ul>
                     </fieldset>
 
                     <fieldset className="features-form__fieldset features-form__fieldset--rate form__fieldset">
                         <legend className="features-form__legend form__legend">Тариф</legend>
                         <ul className="features-form__list features-form__list--rate">
-                            <li className="features-form__item">
-                                <input className="features-form__input form__input form__input--radio visually-hidden" type="radio" name="rate" id="by-minute" value="by-minute" ></input>
-                                <label className="features-form__label form__label form__label--radio" htmlFor="by-minute">Поминутно, 7₽/мин</label>
-                            </li>
-                            <li className="features-form__item">
-                                <input className="features-form__input form__input form__input--radio visually-hidden" type="radio" name="rate" id="by-day" value="by-day" checked></input>
-                                <label className="features-form__label form__label form__label--radio" htmlFor="by-day">На сутки, 1999₽/мин</label>
-                            </li>
+                            {RatesRadios.map(({ name, form, label }) =>
+                                <li className="features-form__item" key={name}>
+                                    <RadioInput key={name} name={name} form={form} label={label} setCurrentFilterValue={setRateValue} currentFilter={currentRate} />
+                                </li>
+                            )}
                         </ul>
                     </fieldset>
 
                     <fieldset className="features-form__fieldset features-form__fieldset--additional form__fieldset">
                         <legend className="features-form__legend form__legend">Доп услуги</legend>
                         <ul className="features-form__list features-form__list--additional">
-                            <li className="features-form__item">
-                                <input className="features-form__input form__input form__input--checkbox visually-hidden" type="checkbox" name="additional" id="full-tank" value="full-tank"></input>
-                                <label className="features-form__label form__label form__label--checkbox" htmlFor="full-tank">Полный бак, 500₽</label>
-                                <div className="form__label-tick"></div>
-                            </li>
-                            <li className="features-form__item">
-                                <input className="features-form__input form__input form__input--checkbox visually-hidden" type="checkbox" name="additional" id="child-seat" value="child-seat" ></input>
-                                <label className="features-form__label form__label form__label--checkbox" htmlFor="child-seat">Детское кресло, 200₽</label>
-                                <div className="form__label-tick"></div>
-                            </li>
-                            <li className="features-form__item">
-                                <input className="features-form__input form__input form__input--checkbox visually-hidden" type="checkbox" name="additional" id="right-wheel" value="right-wheel" ></input>
-                                <label className="features-form__label form__label form__label--checkbox" htmlFor="right-wheel">Правый руль, 1600₽</label>
-                                <div className="form__label-tick"></div>
-                            </li>
+                            {AdditionalsCheckboxes.map(({ name, form, label }) =>
+                                <li className="features-form__item" key={name}>
+                                    <CheckboxInput key={name} name={name} form={form} label={label} setCurrentFilterValue={setAdditionsValue} currentFilter={additionsList} />
+                                </li>
+                            )}
                         </ul>
                     </fieldset>
                 </div>
                 <div className="order-page__receipt-wrapper">
                     <OrderReceipt />
-                    <button className="button button--submit" type="submit" disabled>Итого</button>
+                    <TabFormButton tab={Tabs.get('RESULT')} isValid={isValid} label={BUTTON_LABEL} />
                 </div>
             </div>
         </form>

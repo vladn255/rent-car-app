@@ -67,6 +67,9 @@
   width: 287px;
   min-height: 48px;
   padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
   @media (max-width: $tablet-width) {
     margin: auto;
@@ -75,4 +78,22 @@
   @media (max-width: $mobile-width) {
     width: 260px;
   }
+}
+
+.button--checkout-color {
+  background: linear-gradient(90deg, #493013 0%, #7b0c3b 100%);
+}
+
+.button--modal-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 177px;
+  min-height: 48px;
+  margin-right: 16px;
+}
+
+.button--modal-close {
+  width: 164px;
+  min-height: 48px;
 }
