@@ -40,8 +40,8 @@ const ModelForm = () => {
     const setCurrentFilterValue = (filter) => setCurrentFilter(filter);
 
     const checkIsValid = () => {
-        return isValid !== (currentModel !== null)
-            ? setIsValid(currentModel !== null)
+        return isValid !== (currentModel.length !== 0)
+            ? setIsValid(currentModel.length !== 0)
             : isValid
     }
 

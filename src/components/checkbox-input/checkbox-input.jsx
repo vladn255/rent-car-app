@@ -9,7 +9,7 @@ const CheckboxInput = ({ name, form, label, setCurrentFilterValue, currentFilter
 
     return (
         <>
-            <input className="form__input form__input--checkbox visually-hidden" type="checkbox" name={form} id={name} value={name} сhecked={currentFilter.includes(name)} onChange={inputChangeHandler}></input>
+            <input className="form__input form__input--checkbox visually-hidden" type="checkbox" name={form} id={name} value={name} сhecked={currentFilter.includes(name).toString()} onChange={inputChangeHandler} />
             <label className="form__label form__label--checkbox" htmlFor={name}>{label}</label>
             <div className="form__label-tick"></div>
         </>
