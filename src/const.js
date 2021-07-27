@@ -59,6 +59,7 @@ const ActionType = {
     SET_DATE: "setDate",
     SET_RATE: "setRate",
     SET_ADDITIONS: "setAdditions",
+    SET_MODELS_DATA: "setModelsData"
 };
 
 const ModelTypes = {

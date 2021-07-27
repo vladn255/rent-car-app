@@ -3,9 +3,9 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Tabs, ModelTypes } from "../../const.js";
 import { setModel, setActiveFilter } from "../../store/action";
-import { Models } from "../../mocks.js";
-import ModelFormItem from "../model-form-item/model-form-item.jsx";
+import { fetchModelsDataEntity } from "../../store/api-action";
 
+import ModelFormItem from "../model-form-item/model-form-item.jsx";
 import OrderReceipt from "../order-receipt/order-receipt.jsx";
 import TabFormButton from "../tab-form-button/tab-form-button";
 import RadioInput from "../radio-input/radio-input.jsx";
@@ -30,22 +30,45 @@ const ModelFormRadios = [
 
 const BUTTON_LABEL = "Дополнительно";
 
+const ModelClassTags = {
+    economy: "коном",
+    premium: "юкс"
+}
+
 const ModelForm = () => {
+    const dispatch = useDispatch();
+
+    const initialModelsData = useSelector((state) => state.modelsData)
+
     const [isValid, setIsValid] = useState(false);
     const [currentModel, setCurrentModel] = useState(useSelector((state) => state.model));
     const [currentFilter, setCurrentFilter] = useState(useSelector((state) => state.activeFilter));
+    const [models, setModels] = useState(initialModelsData);
+
+    if (models.length === 0) {
+        dispatch(fetchModelsDataEntity())
+            .then((response) => {
+                setModels(response)
+            })
+    }
 
     const setModelValue = (modelValue) => setCurrentModel(modelValue);
 
-    const setCurrentFilterValue = (filter) => setCurrentFilter(filter);
+    const setCurrentFilterValue = (filter) => {
+        setCurrentFilter(filter);
+
+        filter !== ModelTypes.ALL_MODELS
+            ? setModels(initialModelsData.slice().filter((model) => {
+                return model.categoryId !== null && model.categoryId.name.includes(`${ModelClassTags[filter]}`)
+            }))
+            : setModels(initialModelsData)
+    };
 
     const checkIsValid = () => {
         return isValid !== (currentModel.length !== 0)
             ? setIsValid(currentModel.length !== 0)
             : isValid
     }
-
-    const dispatch = useDispatch();
 
     useEffect(() => {
         setCurrentFilter(currentFilter);
@@ -71,8 +94,9 @@ const ModelForm = () => {
                     </fieldset>
 
                     <div className="order-page__selection model-form__gallery gallery">
-                        {Models.map(({ name, cost, imgSrc }) => <ModelFormItem key={Math.random() * 10000} name={name} cost={cost} imgSrc={imgSrc} isActive={name === currentModel} setModelValue={setModelValue} />)}
-
+                        {models.length !== 0
+                            ? models.map(({ id, name, priceMin, priceMax, thumbnail: { path } }) => <ModelFormItem key={id} name={name} priceMin={priceMin} priceMax={priceMax} imgSrc={path} isActive={name === currentModel} setModelValue={setModelValue} />)
+                            : <h4>Данные загружаются</h4>}
                     </div>
                 </div>
 

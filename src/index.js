@@ -10,15 +10,12 @@ import App from './components/app/app.jsx';
 
 import reducer from './store/reducer.js';
 import { createAPI } from './services/api.js';
-import { fetchEntity } from './store/api-action';
 
 const api = createAPI();
 const store = createStore(
   reducer,
   applyMiddleware(thunk.withExtraArgument(api))
 );
-
-store.dispatch(fetchEntity())
 
 ReactDOM.render(
   <React.StrictMode>

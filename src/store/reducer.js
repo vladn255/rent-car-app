@@ -10,7 +10,9 @@ const initialState = {
     rate: '',
     additions: [],
     dateStart: '',
-    dateFinish: ''
+    dateFinish: '',
+
+    modelsData: []
 }
 
 const reducer = (state = initialState, action) => {
@@ -63,6 +65,12 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 dateStart: action.payload.dateStart,
                 dateFinish: action.payload.dateFinish
+            }
+
+        case ActionType.SET_MODELS_DATA:
+            return {
+                ...state,
+                modelsData: action.payload
             }
 
         default: {
