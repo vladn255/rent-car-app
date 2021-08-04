@@ -57,6 +57,10 @@
   }
 }
 
+.form__list--hidden {
+  display: none;
+}
+
 .form__label--radio {
   display: flex;
   flex-direction: row;

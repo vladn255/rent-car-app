@@ -12,7 +12,9 @@ const initialState = {
     dateStart: '',
     dateFinish: '',
 
-    modelsData: []
+    modelsData: [],
+    citiesData: [],
+    pickpointData: []
 }
 
 const reducer = (state = initialState, action) => {
@@ -71,6 +73,18 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 modelsData: action.payload
+            }
+
+        case ActionType.SET_CITIES_DATA:
+            return {
+                ...state,
+                citiesData: action.payload
+            }
+
+        case ActionType.SET_PICKPOINT_DATA:
+            return {
+                ...state,
+                pickpointData: action.payload
             }
 
         default: {

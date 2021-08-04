@@ -10,73 +10,50 @@ const RECEIPT = {
 }
 
 const Markers = [
-    {
-        latitude: 54.3182,
-        longitude: 48.3626
-    },
-    {
-        latitude: 54.3082,
-        longitude: 48.3716
-    },
-    {
-        latitude: 54.3202,
-        longitude: 48.3816
-    }
+    [54.3182, 48.3626],
+    [54.3082, 48.3716],
+    [54.3202, 48.3816]
 ];
 
-const Models = [
+const CitiesCoords = [
     {
-        name: 'ELANTRA',
-        cost: '12 000 - 25 000 ₽',
-        /* eslint-disable-next-line no-undef */
-        imgSrc: `${process.env.PUBLIC_URL}/img/gallery/image1.png`
+        name: 'Саранск',
+        value: [54.18671, 45.18383]
     },
     {
-        name: 'i30 N',
-        cost: '10 000 - 32 000 ₽',
-        /* eslint-disable-next-line no-undef */
-        imgSrc: `${process.env.PUBLIC_URL}/img/gallery/image2.png`
+        name: 'Казань',
+        value: [55.7823547, 49.1242266]
     },
     {
-        name: 'CRETA',
-        cost: '12 000 - 25 000 ₽',
-        /* eslint-disable-next-line no-undef */
-        imgSrc: `${process.env.PUBLIC_URL}/img/gallery/image3.png`
+        name: 'Саратов',
+        value: [51.53952715, 46.03338615081432]
     },
     {
-        name: 'SONATA',
-        cost: '10 000 - 32 000 ₽',
-        /* eslint-disable-next-line no-undef */
-        imgSrc: `${process.env.PUBLIC_URL}/img/gallery/image4.png`
+        name: 'Санкт-Петербург',
+        value: [59.938732, 30.316229]
     },
     {
-        name: 'ELANTRA 2',
-        cost: '12 000 - 25 000 ₽',
-        /* eslint-disable-next-line no-undef */
-        imgSrc: `${process.env.PUBLIC_URL}/img/gallery/image1.png`
+        name: 'Уфа',
+        value: [46.370935349999996, 6.231168493722434]
     },
     {
-        name: 'i30 N 2',
-        cost: '10 000 - 32 000 ₽',
-        /* eslint-disable-next-line no-undef */
-        imgSrc: `${process.env.PUBLIC_URL}/img/gallery/image2.png`
+        name: 'Димитровград',
+        value: [54.2188995, 49.6038982]
     },
     {
-        name: 'CRETA 2',
-        cost: '12 000 - 25 000 ₽',
-        /* eslint-disable-next-line no-undef */
-        imgSrc: `${process.env.PUBLIC_URL}/img/gallery/image3.png`
+        name: 'Москва',
+        value: [55.7504461, 37.6174943]
     },
     {
-        name: 'SONATA 2',
-        cost: '10 000 - 32 000 ₽',
-        /* eslint-disable-next-line no-undef */
-        imgSrc: `${process.env.PUBLIC_URL}/img/gallery/image4.png`
-    }
+        name: 'Краснодар',
+        value: [45.0352566, 38.9764814]
+    },
+
 ]
+
 
 export {
     RECEIPT,
     Markers,
-    Models
+    CitiesCoords
 }
