@@ -14,7 +14,10 @@ import AutocompleteTextInputs from "../autocomplete-text-inputs/autocomplete-tex
 import TabFormButton from "../tab-form-button/tab-form-button";
 
 const BUTTON_LABEL = "Выбрать модель";
-const CITY_LABEL = "city";
+const Labels = {
+    CITY: "city",
+    PICKPOINT: "pickpoint"
+};
 
 const LocationForm = () => {
     const [isValid, setIsValid] = useState(false);
@@ -25,6 +28,7 @@ const LocationForm = () => {
     const [citiesData, setCitiesData] = useState(useSelector((state) => state.citiesData));
     const [pickpointData, setPickpointData] = useState(useSelector((state) => state.pickpointData));
     const [activeCity, setActiveCity] = useState(null)
+    const [activeMarker, setActiveMarker] = useState(null)
 
     const dispatch = useDispatch();
 
@@ -55,7 +59,7 @@ const LocationForm = () => {
         setLocationData(locationData);
         checkIsValid();
         dispatch(setLocation(locationData));
-    }, [activeCity])
+    }, [activeCity, activeMarker])
 
     const checkIsValid = () => {
         return isValid !== (locationData.city.length !== 0 && locationData.pickpoint.length !== 0)
@@ -66,11 +70,19 @@ const LocationForm = () => {
     const setLocationDataValue = (locationValue) => {
         setLocationData({ ...locationData, [locationValue.name]: locationValue.value })
 
-        if (locationValue.name === CITY_LABEL) {
+        if (locationValue.name === Labels.CITY) {
             const filteredCity = citiesData.slice().filter((item) => item.value === locationValue.value)
 
             if (filteredCity.length !== 0) {
                 setActiveCity(filteredCity[0].value)
+            }
+        }
+
+        if (locationValue.name === Labels.PICKPOINT) {
+            const filteredPoints = pickpointData.slice().filter((item) => item.value === locationValue.value)
+
+            if (filteredPoints.length !== 0) {
+                setActiveMarker(filteredPoints[0].value)
             }
         }
     };
@@ -93,9 +105,7 @@ const LocationForm = () => {
 
                     <div className="order-page__selection location-form__map">
                         <h3 className="location-form__text">Выбрать на карте:</h3>
-                        <MapComponent activeCity={activeCity} markersData={pickpointData} />
-
-                        {/* <MapComponent markers={Markers} activeMarker={Markers[0]} activeCity={activeCity} /> */}
+                        <MapComponent activeCity={activeCity} markersData={pickpointData} activeMarker={activeMarker} />
                     </div>
                 </div>
 

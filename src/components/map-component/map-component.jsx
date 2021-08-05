@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import React, { useEffect, useState } from "react";
 import PropTypes from 'prop-types';
 import { YMaps, Map, Placemark } from "react-yandex-maps";
@@ -10,53 +9,54 @@ const defaultlMark = {
     controls: ['zoomControl']
 }
 
-const ZOOM = 13;
+const ZOOM = 14;
 
-const MapComponent = ({ activeCity, markersData }) => {
+const MapComponent = ({ activeCity, activeMarker, markersData }) => {
 
     const [savedYmaps, setSavedYmaps] = useState(null)
     const [zoom, setZoom] = useState(defaultlMark.zoom)
     const [activeCityCoords, setActiveCityCoords] = useState(defaultlMark.center)
+    const [activeMarkerCoords, setActiveMarkerCoords] = useState(activeCityCoords)
     const [markers, setMarkers] = useState([])
-
-    const unmountSequence = () => {
-        geocode(savedYmaps, activeCity, setActiveCityCoords)
-        setZoom(ZOOM)
-        console.log('unmount sequence', markersData, markers)
-
-        markersData.slice().map((marker) => {
-            const fullAddress = `${activeCity} ${marker.value}`
-            console.log('setMarkers worked', marker, geocode(savedYmaps, fullAddress, getGeocodedValue))
-
-            // return {
-            //     id: marker.id,
-            //     value: geocode(savedYmaps, fullAddress, getGeocodedValue)
-            // }
-        })
-    }
 
     useEffect(() => {
         if (savedYmaps !== null) {
-            return unmountSequence()
+            return unmountSequence(savedYmaps)
         }
-    }, [activeCity, markersData])
+    }, [activeCity, activeMarker, markersData])
 
-    const geocode = async (ymaps, location, callback) => {
+    const geocode = (ymaps, location, callback) => {
         ymaps.geocode(location, {
             results: 1
         }).then((response) => {
             const firstGeoObject = response.geoObjects.get(0)
             const coords = firstGeoObject.geometry.getCoordinates()
-            console.log('geocode', coords)
             callback(coords)
         })
     }
 
-    const getGeocodedValue = async (coords) => {
-        return await coords
-    }
 
-    console.log('map render', activeCity, activeCityCoords, markersData, markers)
+    const unmountSequence = (ymaps) => {
+        const fullAddress = `${activeCity} ${activeMarker}`
+        geocode(ymaps, activeCity, setActiveCityCoords)
+        geocode(ymaps, fullAddress, setActiveMarkerCoords)
+        setZoom(ZOOM)
+
+        const newMarkers = []
+        markersData.slice().map(async (marker) => {
+            const fullMarkerAddress = `${activeCity} ${marker.value}`
+
+            const getGeocodedMarkers = (coords) => {
+                newMarkers.push({
+                    id: marker.id,
+                    value: coords
+                })
+            }
+
+            await geocode(ymaps, fullMarkerAddress, getGeocodedMarkers)
+        })
+        setMarkers(newMarkers)
+    }
 
     return (
         <YMaps
@@ -65,29 +65,28 @@ const MapComponent = ({ activeCity, markersData }) => {
                 load: "package.full"
             }}
         >
-            <Map
-                state={{ center: activeCityCoords, zoom: zoom, controls: ['zoomControl'] }}
-                onLoad={async (ymaps) => {
-                    await setSavedYmaps(ymaps)
-                    console.log('onLoad', activeCityCoords, markers)
-                    if (activeCity !== null) {
-                        geocode(ymaps, activeCity)
-                    }
-                }}
-                width={'100%'}
-                height={'352px'}>
-                {markers.length === 0
-                    ? ''
-                    : markers.map((marker) => {
-                        console.log('marker', marker)
-                        return (<Placemark
-                            key={marker.id}
-                            geometry={marker.value}
-                            options={{
-                                preset: 'islands#greenCircleIcon',
-                            }} />)
-                    })}
-            </Map>
+            {markers.length === 0
+                ? < Map
+                    state={{ center: activeCityCoords, zoom: zoom, controls: ['zoomControl'] }}
+                    onLoad={async (ymaps) => {
+                        await setSavedYmaps(ymaps)
+                    }}
+                    width={'100%'}
+                    height={'352px'} />
+
+                : <Map
+                    state={{ center: activeMarkerCoords, zoom: zoom, controls: ['zoomControl'] }}
+                    onLoad={async (ymaps) => {
+                        await setSavedYmaps(ymaps)
+                    }}
+                    width={'100%'}
+                    height={'352px'}>
+
+                    {markers.map((marker) => <Placemark key={marker.id} geometry={marker.value} options={{
+                        preset: 'islands#greenCircleIcon',
+                    }} />)}
+                </Map>
+            }
         </YMaps>
     )
 }
@@ -96,6 +95,7 @@ const MapComponent = ({ activeCity, markersData }) => {
 
 MapComponent.propTypes = {
     activeCity: PropTypes.string,
+    activeMarker: PropTypes.string,
     markersData: PropTypes.array.isRequired
 }
 
