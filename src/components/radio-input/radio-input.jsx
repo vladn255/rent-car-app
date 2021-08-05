@@ -8,7 +8,7 @@ const RadioInput = ({ name, form, label, setCurrentFilterValue, currentFilter })
 
     return (
         <>
-            <input className="form__input form__input--radio visually-hidden" type="radio" name={form} id={name} value={name} checked={currentFilter === name} onChange={changeModelTypeHandler}></input>
+            <input className="form__input form__input--radio visually-hidden" type="radio" name={form} id={name} value={name} checked={currentFilter === name} onChange={changeModelTypeHandler} />
             <label className="form__label form__label--radio" htmlFor={name}>{label}</label>
         </>
     )

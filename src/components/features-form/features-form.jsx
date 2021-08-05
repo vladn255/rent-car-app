@@ -84,29 +84,33 @@ const FeaturesForm = () => {
         dateFinish: useSelector((state) => state.dateFinish)
     });
     const [currentRate, setCurrentRate] = useState(useSelector((state) => state.rate));
-    const [additionsList, setAdditionsList] = useState(useSelector((state) => state.additions));
+    const stateAdditions = useSelector((state) => state.additions)
+    const [additionsList, setAdditionsList] = useState(stateAdditions);
 
     const setColorValue = (color) => {
         setCurrentColor(color)
-        console.log('color', color, currentColor)
     };
     const setDateStartValue = (dateValue) => {
         setCurrentDate({ ...currentDateData, [dateValue.name]: dateValue.value });
     }
     const setRateValue = (rate) => {
         setCurrentRate(rate);
-        console.log('rate', rate, currentRate)
     }
     const setAdditionsValue = (feature) => {
-        const index = additionsList.indexOf(feature);
-        additionsList.includes(feature)
-            ? additionsList.splice(index, 1)
-            : additionsList.push(feature)
+        const newList = stateAdditions.slice();
+        const index = newList.indexOf(feature);
+        newList.includes(feature)
+            ? newList.splice(index, 1)
+            : newList.push(feature)
+        setAdditionsList(newList)
     }
 
     const checkIsValid = () => {
-        return isValid !== (currentDateData.dateStart.length !== 0 && currentDateData.dateFinish.length !== 0)
-            ? setIsValid(currentDateData.dateStart.length !== 0 && currentDateData.dateFinish.length !== 0)
+        const dateStart = currentDateData.dateStart;
+        const dateFinish = currentDateData.dateFinish;
+
+        return isValid !== (dateStart.length !== 0 && dateFinish.length !== 0)
+            ? setIsValid(dateStart.length !== 0 && dateFinish.length !== 0)
             : isValid
     };
 
@@ -119,7 +123,7 @@ const FeaturesForm = () => {
         setAdditionsList(additionsList);
 
         checkIsValid();
-
+        
         dispatch(setColor(currentColor));
         dispatch(setDate(currentDateData));
         dispatch(setRate(currentRate));

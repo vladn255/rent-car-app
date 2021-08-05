@@ -59,6 +59,7 @@ const ActionType = {
     SET_DATE: "setDate",
     SET_RATE: "setRate",
     SET_ADDITIONS: "setAdditions",
+    SET_MODELS_DATA: "setModelsData"
 };
 
 const ModelTypes = {
@@ -84,6 +85,17 @@ const Additionals = {
     RIGHT_WHEEL: "right-wheel"
 }
 
+const ReceiptNames = {
+    "full-tank": "Полный бак",
+    "child-seat": "Детское кресло",
+    "right-wheel": "Правый руль",
+    "all-color": "Любой",
+    "red": "Красный",
+    "blue": "Голубой",
+    "by-minute": "Поминутно",
+    "by-day": "На сутки"
+}
+
 export {
     SLIDES_INFO,
     LANGUAGES,
@@ -94,5 +106,6 @@ export {
     ModelTypes,
     Colors,
     Rates,
-    Additionals
+    Additionals,
+    ReceiptNames
 }

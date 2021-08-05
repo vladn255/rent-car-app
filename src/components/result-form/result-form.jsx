@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { RoutePath } from "../../const.js";
@@ -13,15 +14,18 @@ const ResultForm = () => {
         setIsModalOpen(!isModalOpen);
     }
 
+    const model = useSelector((state) => state.model);
+    const dateStart = useSelector((state) => state.dateStart);
+
     return (
         <div className="order-page__form result">
             <div className="order-page__form-wrapper result__container">
                 <h3 className="visually-hidden">Детали заказа</h3>
                 <div className="result__wrapper">
-                    <p className="result__model">Hyndai, i30 N</p>
+                    <p className="result__model">{`Hyndai, ${model}`}</p>
                     <p className="result__plate-number">K 761 HA 73</p>
                     <p className="result__additional"><b>Топливо</b> 100%</p>
-                    <p className="result__additional"><b>Доступна с</b> 12.06.2019 12:00</p>
+                    <p className="result__additional"><b>Доступна с </b><span>{dateStart}</span></p>
                 </div>
                 {/* eslint-disable-next-line no-undef */}
                 <img className="result__picture" src={`${process.env.PUBLIC_URL}/img/gallery/image2.png`}

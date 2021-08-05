@@ -9,7 +9,7 @@ const Main = () => {
     return (
         <main className="main">
             <section className="main__wrapper">
-                <MainHeader />
+                <MainHeader additionalStyleName={""}/>
                 <Banner />
                 <MainFooter />
             </section>

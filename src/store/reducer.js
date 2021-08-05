@@ -1,4 +1,4 @@
-import { ActionType, Tabs, ModelTypes, Colors, Rates } from "../const.js";
+import { ActionType, Tabs, ModelTypes } from "../const.js";
 
 const initialState = {
     activeTab: Tabs.get('LOCATION'),
@@ -6,11 +6,13 @@ const initialState = {
     pickpoint: '',
     model: '',
     activeFilter: ModelTypes.ALL_MODELS,
-    color: Colors.ALL_COLOR,
-    rate: Rates.BY_DAY,
+    color: '',
+    rate: '',
     additions: [],
-    dateStart: '12.06.2019 12:00',
-    dateFinish: ''
+    dateStart: '',
+    dateFinish: '',
+
+    modelsData: []
 }
 
 const reducer = (state = initialState, action) => {
@@ -63,6 +65,12 @@ const reducer = (state = initialState, action) => {
                 ...state,
                 dateStart: action.payload.dateStart,
                 dateFinish: action.payload.dateFinish
+            }
+
+        case ActionType.SET_MODELS_DATA:
+            return {
+                ...state,
+                modelsData: action.payload
             }
 
         default: {

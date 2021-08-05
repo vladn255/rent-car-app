@@ -40,6 +40,11 @@ const setDate = (date) => ({
     payload: date
 });
 
+const fetchModelsData = (data) => ({
+    type: ActionType.SET_MODELS_DATA,
+    payload: data
+})
+
 export {
     changeTab,
     setLocation,
@@ -48,5 +53,6 @@ export {
     setColor,
     setRate,
     setAdditions,
-    setDate
+    setDate,
+    fetchModelsData
 }

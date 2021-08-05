@@ -24,13 +24,19 @@
 
   width: 100%;
   height: 100%;
-  padding-top: 16px;
-  padding-left: 16px;
 
   &:hover,
   &:focus {
     border-color: $grey-dark;
   }
+}
+
+.gallery__text-wrapper {
+  position: absolute;
+  top: 16px;
+  left: 16px;
+  z-index: 2;
+  text-align: left;
 }
 
 .gallery__title {
@@ -49,6 +55,16 @@
   position: absolute;
   right: 16px;
   bottom: 16px;
+}
+
+.gallery__fallback {
+  position: absolute;
+  right: 16px;
+  bottom: 16px;
+  background-color: $grey-dark;
+
+  width: 256px;
+  height: 116px;
 }
 
 .gallery__model-wrapper--visited {
