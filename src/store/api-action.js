@@ -21,15 +21,24 @@ const fetchCitiesEntity = () => (dispatch, _getState, api) => (
 
 const fetchPickpoint = () => (dispatch, _getState, api) => (
     api.get('/db/point')
-    .then(({data: { data }}) => {
-        dispatch(fetchPickpointData(data));
-        return data;
-    })
-    .catch((err) => console.log(err))
+        .then(({ data: { data } }) => {
+            dispatch(fetchPickpointData(data));
+            return data;
+        })
+        .catch((err) => console.log(err))
+)
+
+const fetchModelTagsDataEntity = () => (_dispatch, _getState, api) => (
+    api.get('/db/category')
+        .then(({ data: { data } }) => {
+            return data;
+        })
+        .catch((err) => console.log(err))
 )
 
 export {
     fetchModelsDataEntity,
     fetchCitiesEntity,
-    fetchPickpoint
+    fetchPickpoint,
+    fetchModelTagsDataEntity
 }

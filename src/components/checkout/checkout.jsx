@@ -25,7 +25,7 @@ const Checkout = () => {
                     <div className="order-page__form-wrapper result__container">
                         <div className="result__wrapper">
                             <h3 className="checkout__title">Ваш заказ подтверждён</h3>
-                            <p className="result__model">{`Hyndai, ${model}`}</p>
+                            <p className="result__model">{model}</p>
                             <p className="result__plate-number">K 761 HA 73</p>
                             <p className="result__additional"><b>Топливо</b> 100%</p>
                             <p className="result__additional"><b>Доступна с </b><span>{dateStart}</span></p>

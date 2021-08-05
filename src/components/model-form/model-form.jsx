@@ -3,36 +3,28 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Tabs, ModelTypes } from "../../const.js";
 import { setModel, setActiveFilter } from "../../store/action";
-import { fetchModelsDataEntity } from "../../store/api-action";
+import { fetchModelsDataEntity, fetchModelTagsDataEntity } from "../../store/api-action";
 
 import ModelFormItem from "../model-form-item/model-form-item.jsx";
 import OrderReceipt from "../order-receipt/order-receipt.jsx";
 import TabFormButton from "../tab-form-button/tab-form-button";
 import RadioInput from "../radio-input/radio-input.jsx";
 
-const ModelFormRadios = [
-    {
-        name: ModelTypes.ALL_MODELS,
-        form: "model-type",
-        label: "Все модели"
-    },
-    {
-        name: ModelTypes.ECONOMY,
-        form: "model-type",
-        label: "Эконом"
-    },
-    {
-        name: ModelTypes.PREMIUM,
-        form: "model-type",
-        label: "Премиум"
-    },
-]
-
 const BUTTON_LABEL = "Дополнительно";
 
-const ModelClassTags = {
-    economy: "коном",
-    premium: "юкс"
+const FORM_NAME = "model-type"
+
+const MODEL_FORM_RADIO_DEFAULT = [
+    {
+        name: "Все модели",
+        form: FORM_NAME,
+    }
+]
+
+const getFilteredModelData = (modelData, filterValue) => {
+    modelData.slice().filter((model) => {
+        return model.categoryId !== null && model.categoryId.name === filterValue
+    })
 }
 
 const ModelForm = () => {
@@ -44,11 +36,22 @@ const ModelForm = () => {
     const [currentModel, setCurrentModel] = useState(useSelector((state) => state.model));
     const [currentFilter, setCurrentFilter] = useState(useSelector((state) => state.activeFilter));
     const [models, setModels] = useState(initialModelsData);
+    const [categories, setCategories] = useState(MODEL_FORM_RADIO_DEFAULT);
 
-    if (models.length === 0) {
+    if (models !== undefined && models.length === 0) {
         dispatch(fetchModelsDataEntity())
             .then((response) => {
                 setModels(response)
+            })
+            .then(() => dispatch(fetchModelTagsDataEntity()))
+            .then((categoryData) => {
+                const categoryTags = categoryData.map((category) => {
+                    return {
+                        name: category.name,
+                        form: FORM_NAME,
+                    }
+                })
+                setCategories(MODEL_FORM_RADIO_DEFAULT.concat(categoryTags))
             })
     }
 
@@ -58,9 +61,7 @@ const ModelForm = () => {
         setCurrentFilter(filter);
 
         filter !== ModelTypes.ALL_MODELS
-            ? setModels(initialModelsData.slice().filter((model) => {
-                return model.categoryId !== null && model.categoryId.name.includes(`${ModelClassTags[filter]}`)
-            }))
+            ? setModels(getFilteredModelData(initialModelsData, filter))
             : setModels(initialModelsData)
     };
 
@@ -85,9 +86,9 @@ const ModelForm = () => {
                     <fieldset className="model-form__fieldset form__fieldset" >
                         <legend className="visually-hidden">Форма выбора модели</legend>
                         <ul className="model-form__list">
-                            {ModelFormRadios.map(({ name, form, label }) =>
+                            {categories.map(({ name, form }) =>
                                 <li className="model-form__item" key={name}>
-                                    <RadioInput key={name} name={name} form={form} label={label} setCurrentFilterValue={setCurrentFilterValue} currentFilter={currentFilter} />
+                                    <RadioInput key={name} name={name} form={form} label={name} setCurrentFilterValue={setCurrentFilterValue} currentFilter={currentFilter} />
                                 </li>
                             )}
                         </ul>

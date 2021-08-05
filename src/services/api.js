@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const URL = `https://api-factory.simbirsoft1.com/api`;
-const REQUEST_TIMEOUT = 10000;
+const REQUEST_TIMEOUT = 20000;
 const APPLICATION_ID = '5e25c641099b810b946c5d5b'
 const RANDOM_STRING = 'u5taw48o'
 const SECRET = '4cbcea96de';
