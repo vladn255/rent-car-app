@@ -4,7 +4,7 @@ import { YMaps, Map, Placemark } from "react-yandex-maps";
 
 
 const defaultlMark = {
-    zoom: 5,
+    defaultZoom: 5,
     center: [64.6863136, 97.7453061],
     controls: ['zoomControl']
 }
@@ -12,10 +12,11 @@ const defaultlMark = {
 const ZOOM = 14;
 
 const MapComponent = ({ activeCity, activeMarker, markersData }) => {
+    const { defaultZoom, center, controls } = defaultlMark;
 
     const [savedYmaps, setSavedYmaps] = useState(null)
-    const [zoom, setZoom] = useState(defaultlMark.zoom)
-    const [activeCityCoords, setActiveCityCoords] = useState(defaultlMark.center)
+    const [zoom, setZoom] = useState(defaultZoom)
+    const [activeCityCoords, setActiveCityCoords] = useState(center)
     const [activeMarkerCoords, setActiveMarkerCoords] = useState(activeCityCoords)
     const [markers, setMarkers] = useState([])
 
@@ -67,7 +68,7 @@ const MapComponent = ({ activeCity, activeMarker, markersData }) => {
         >
             {markers.length === 0
                 ? < Map
-                    state={{ center: activeCityCoords, zoom: zoom, controls: ['zoomControl'] }}
+                    state={{ center: activeCityCoords, zoom: zoom, controls: controls }}
                     onLoad={async (ymaps) => {
                         await setSavedYmaps(ymaps)
                     }}
@@ -75,7 +76,7 @@ const MapComponent = ({ activeCity, activeMarker, markersData }) => {
                     height={'352px'} />
 
                 : <Map
-                    state={{ center: activeMarkerCoords, zoom: zoom, controls: ['zoomControl'] }}
+                    state={{ center: activeMarkerCoords, zoom: zoom, controls: controls }}
                     onLoad={async (ymaps) => {
                         await setSavedYmaps(ymaps)
                     }}

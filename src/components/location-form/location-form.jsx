@@ -5,9 +5,6 @@ import { Tabs } from "../../const.js";
 import { setLocation } from "../../store/action";
 import { fetchCitiesEntity, fetchPickpoint } from "../../store/api-action";
 
-// eslint-disable-next-line no-unused-vars
-import { Markers } from "../../mocks";
-
 import MapComponent from "../map-component/map-component.jsx";
 import OrderReceipt from "../order-receipt/order-receipt.jsx";
 import AutocompleteTextInputs from "../autocomplete-text-inputs/autocomplete-text-inputs.jsx";
@@ -27,6 +24,7 @@ const LocationForm = () => {
     });
     const [citiesData, setCitiesData] = useState(useSelector((state) => state.citiesData));
     const [pickpointData, setPickpointData] = useState(useSelector((state) => state.pickpointData));
+    const [pickpoints, setPickpoints] = useState([])
     const [activeCity, setActiveCity] = useState(null)
     const [activeMarker, setActiveMarker] = useState(null)
 
@@ -34,27 +32,29 @@ const LocationForm = () => {
 
     useEffect(() => {
         if (citiesData.length === 0) {
-            dispatch(fetchCitiesEntity()).then((response) => {
-                setCitiesData(response.map((city) => {
-                    return {
-                        id: city.id,
-                        value: city.name
-                    }
-                }))
+            dispatch(fetchCitiesEntity())
+                .then((response) => {
+                    setCitiesData(response.map((city) => {
+                        return {
+                            id: city.id,
+                            value: city.name
+                        }
+                    }))
+                })
+
+            dispatch(fetchPickpoint()).then((response) => {
+                setPickpointData(response)
+
             })
         }
 
-        if (citiesData.filter((city) => city.name === locationData.city)) {
-            dispatch(fetchPickpoint()).then((response) => {
-                const filteredPoints = response.filter((point) => point.cityId !== null && point.cityId.name === locationData.city)
-                setPickpointData(filteredPoints.map((point) => {
-                    return {
-                        id: point.id,
-                        value: point.address
-                    }
-                }))
-            })
-        }
+        const filteredPoints = pickpointData.filter((point) => point.cityId !== null && point.cityId.name === locationData.city)
+        setPickpoints(filteredPoints.map((point) => {
+            return {
+                id: point.id,
+                value: point.address
+            }
+        }))
 
         setLocationData(locationData);
         checkIsValid();
@@ -73,15 +73,15 @@ const LocationForm = () => {
         if (locationValue.name === Labels.CITY) {
             const filteredCity = citiesData.slice().filter((item) => item.value === locationValue.value)
 
-            if (filteredCity.length !== 0) {
+            if (filteredCity.length) {
                 setActiveCity(filteredCity[0].value)
             }
         }
 
         if (locationValue.name === Labels.PICKPOINT) {
-            const filteredPoints = pickpointData.slice().filter((item) => item.value === locationValue.value)
+            const filteredPoints = pickpoints.slice().filter((item) => item.value === locationValue.value)
 
-            if (filteredPoints.length !== 0) {
+            if (filteredPoints.length) {
                 setActiveMarker(filteredPoints[0].value)
             }
         }
@@ -100,12 +100,12 @@ const LocationForm = () => {
                 <div className="order-page__form-wrapper location-form__wrapper">
                     <fieldset className="location-form__fieldset form__fieldset">
                         <legend className="visually-hidden">Форма выбора местоположения</legend>
-                        <AutocompleteTextInputs values={locationData} citiesData={citiesData} pickpointData={pickpointData} setLocationDataValue={setLocationDataValue} resetLocationData={resetLocationData} />
+                        <AutocompleteTextInputs values={locationData} citiesData={citiesData} pickpointData={pickpoints} setLocationDataValue={setLocationDataValue} resetLocationData={resetLocationData} />
                     </fieldset>
 
                     <div className="order-page__selection location-form__map">
                         <h3 className="location-form__text">Выбрать на карте:</h3>
-                        <MapComponent activeCity={activeCity} markersData={pickpointData} activeMarker={activeMarker} />
+                        <MapComponent activeCity={activeCity} markersData={pickpoints} activeMarker={activeMarker} />
                     </div>
                 </div>
 

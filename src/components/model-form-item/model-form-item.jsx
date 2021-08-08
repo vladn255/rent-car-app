@@ -10,9 +10,9 @@ const ModelFormItem = ({ name, priceMin, priceMax, imgSrc, isActive, setModelVal
     const checkIsValid = () => {
         let isValid = true;
 
-        if (!(typeof imgSrc === 'string')) {
+        if (typeof imgSrc !== 'string') {
             isValid = false;
-        } else if ((typeof imgSrc === 'string')) {
+        } else if (typeof imgSrc === 'string') {
             if (!(imgSrc.includes('jpg') || imgSrc.includes('jpeg') || imgSrc.includes('png'))) {
                 isValid = false;
             }

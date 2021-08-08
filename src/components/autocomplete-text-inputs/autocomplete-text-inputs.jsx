@@ -14,7 +14,7 @@ const getFilteredSuggestions = (list, targetValue, setter, callback) => {
 
 
 const AutocompleteTextInputs = ({ values: { city, pickpoint }, citiesData, pickpointData, setLocationDataValue, resetLocationData }) => {
-    const inputCityRef = useRef('');
+    const inputCityRef = useRef(null);
     const inputPickpointRef = useRef('');
     const [isListVisible, setIsListVisible] = useState(false);
     const [cities, setCities] = useState(citiesData);
@@ -29,7 +29,7 @@ const AutocompleteTextInputs = ({ values: { city, pickpoint }, citiesData, pickp
 
         getFilteredSuggestions(citiesData, evt.target.value, setCities, setIsListVisible)
 
-        if (evt.target.value.length === 0) {
+        if (!evt.target.value.length) {
             inputPickpointRef.current.value = ``;
         }
     }

@@ -22,7 +22,7 @@ const MODEL_FORM_RADIO_DEFAULT = [
 ]
 
 const getFilteredModelData = (modelData, filterValue) => {
-    modelData.slice().filter((model) => {
+    return modelData.slice().filter((model) => {
         return model.categoryId !== null && model.categoryId.name === filterValue
     })
 }
@@ -38,7 +38,7 @@ const ModelForm = () => {
     const [models, setModels] = useState(initialModelsData);
     const [categories, setCategories] = useState(MODEL_FORM_RADIO_DEFAULT);
 
-    if (models !== undefined && models.length === 0) {
+    if (models?.length === 0) {
         dispatch(fetchModelsDataEntity())
             .then((response) => {
                 setModels(response)
@@ -49,6 +49,7 @@ const ModelForm = () => {
                     return {
                         name: category.name,
                         form: FORM_NAME,
+                        id: category.id
                     }
                 })
                 setCategories(MODEL_FORM_RADIO_DEFAULT.concat(categoryTags))
@@ -86,16 +87,16 @@ const ModelForm = () => {
                     <fieldset className="model-form__fieldset form__fieldset" >
                         <legend className="visually-hidden">Форма выбора модели</legend>
                         <ul className="model-form__list">
-                            {categories.map(({ name, form }) =>
-                                <li className="model-form__item" key={name}>
-                                    <RadioInput key={name} name={name} form={form} label={name} setCurrentFilterValue={setCurrentFilterValue} currentFilter={currentFilter} />
+                            {categories.map(({ name, form, id }) =>
+                                <li className="model-form__item" key={id}>
+                                    <RadioInput key={id} name={name} form={form} label={name} setCurrentFilterValue={setCurrentFilterValue} currentFilter={currentFilter} />
                                 </li>
                             )}
                         </ul>
                     </fieldset>
 
                     <div className="order-page__selection model-form__gallery gallery">
-                        {models.length !== 0
+                        {models?.length !== 0
                             ? models.map(({ id, name, priceMin, priceMax, thumbnail: { path } }) => <ModelFormItem key={id} name={name} priceMin={priceMin} priceMax={priceMax} imgSrc={path} isActive={name === currentModel} setModelValue={setModelValue} />)
                             : <h4>Данные загружаются</h4>}
                     </div>
