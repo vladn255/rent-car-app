@@ -2,7 +2,7 @@ import { fetchModelsData, fetchCitiesData, fetchPickpointData } from "./action.j
 
 
 const fetchModelsDataEntity = () => (dispatch, _getState, api) => (
-    api.get('/db/car')
+    api.get('/db/car?&limit=10')
         .then(({ data: { data } }) => {
             dispatch(fetchModelsData(data));
             return data;
@@ -36,9 +36,18 @@ const fetchModelTagsDataEntity = () => (_dispatch, _getState, api) => (
         .catch((err) => console.log(err))
 )
 
+const fetchRateDataEntity = () => (_dispatch, _getState, api) => (
+    api.get('/db/rate')
+        .then(({ data: { data } }) => {
+            return data;
+        })
+        .catch((err) => console.log(err))
+)
+
 export {
     fetchModelsDataEntity,
     fetchCitiesEntity,
     fetchPickpoint,
-    fetchModelTagsDataEntity
+    fetchModelTagsDataEntity,
+    fetchRateDataEntity
 }

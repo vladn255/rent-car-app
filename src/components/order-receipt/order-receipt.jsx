@@ -1,17 +1,30 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import dayjs from "dayjs";
+import customParseFormat from "dayjs/plugin/customParseFormat"
+
 import { RECEIPT } from "../../mocks";
-import { ReceiptNames } from "../../const";
+import { ReceiptNames,
+     TIME_FORMAT
+     } from "../../const";
 import OrderReceiptItem from "../order-receipt-item/order-receipt-item";
 
-const OrderReceipt = () => {
-    const getDuration = () => {
-        if (dateFinish.length !== 0 && dateStart.length !== 0) {
-            const durationDate = new Date(new Date(dateFinish) - new Date(dateStart));
-            return `${durationDate.getDate()}д${durationDate.getHours()}ч`
-        }
-        return ''
+dayjs.extend(customParseFormat)
+
+const HOURS_IN_A_DAY = 24;
+
+const getDuration = (finishData, startData) => {
+    if (finishData.valid && startData.valid) {        
+        const duration = dayjs(finishData.value, TIME_FORMAT).diff(dayjs(startData.value, TIME_FORMAT), 'hour');
+        const durationDays = Math.trunc(duration / HOURS_IN_A_DAY);
+        const durationHours = duration % HOURS_IN_A_DAY;
+        return `${durationDays}д${durationHours}ч`
     }
+    return ''
+}
+
+const OrderReceipt = () => {
+
     const city = useSelector((state) => state.city);
     const pickpoint = useSelector((state) => state.pickpoint);
     const model = useSelector((state) => state.model);
@@ -39,13 +52,13 @@ const OrderReceipt = () => {
         },
         {
             name: `Длительность аренды`,
-            value: getDuration(),
-            text: getDuration()
+            value: getDuration(dateFinish, dateStart),
+            text: getDuration(dateFinish, dateStart)
         },
         {
             name: `Тариф`,
             value: rate,
-            text: ReceiptNames[rate]
+            text: rate
         },
     ]
     const [details, setDetails] = useState(initialDetails);

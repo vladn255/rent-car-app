@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import dayjs from "dayjs";
 
-import { Tabs, Colors, Rates, Additionals } from "../../const.js";
+import { Tabs, Colors, Additionals, TIME_FORMAT } from "../../const.js";
 import { setColor, setDate, setRate, setAdditions } from "../../store/action";
+import { fetchRateDataEntity } from "../../store/api-action";
 
 import OrderReceipt from "../order-receipt/order-receipt.jsx";
 import TabFormButton from "../tab-form-button/tab-form-button.jsx";
 import TextInput from "../text-input/text-input.jsx";
 import RadioInput from "../radio-input/radio-input.jsx";
 import CheckboxInput from "../checkbox-input/checkbox-input.jsx";
+
 
 const ColorRadios = [
     {
@@ -25,19 +28,6 @@ const ColorRadios = [
         name: Colors.BLUE,
         form: "color",
         label: "Голубой"
-    }
-];
-
-const RatesRadios = [
-    {
-        name: Rates.BY_MINUTE,
-        form: "rate",
-        label: "Поминутно, 7₽/мин"
-    },
-    {
-        name: Rates.BY_DAY,
-        form: "rate",
-        label: "На сутки, 1999₽/мин"
     }
 ];
 
@@ -75,23 +65,47 @@ const AdditionalsCheckboxes = [
 ]
 
 const BUTTON_LABEL = "Итого";
+const FORM_RATE_NAME = "rate";
+const DATE_LETTER_COUNT = 16;
+
+const getRateLabel = (name, price, unit) => {
+    return `${name}, ${price}₽/${unit}`
+}
+
+const validateDate = (date, format) => {
+    console.log('testing format', dayjs(date, format), dayjs(date, format).format(format))
+    return dayjs(date, format).format(format) === date;
+}
 
 const FeaturesForm = () => {
     const [isValid, setIsValid] = useState(false);
     const [currentColor, setCurrentColor] = useState(useSelector((state) => state.color));
-    const [currentDateData, setCurrentDate] = useState({
-        dateStart: useSelector((state) => state.dateStart),
-        dateFinish: useSelector((state) => state.dateFinish)
+    const [currentDate, setCurrentDate] = useState({
+        dateStart: {
+            value: useSelector((state) => state.dateStart.value),
+            valid: true
+        },
+        dateFinish: {
+            value: useSelector((state) => state.dateFinish.value),
+            valid: true
+        }
     });
     const [currentRate, setCurrentRate] = useState(useSelector((state) => state.rate));
+    const [rateData, setRateData] = useState([])
+
     const stateAdditions = useSelector((state) => state.additions)
     const [additionsList, setAdditionsList] = useState(stateAdditions);
 
     const setColorValue = (color) => {
         setCurrentColor(color)
     };
-    const setDateStartValue = (dateValue) => {
-        setCurrentDate({ ...currentDateData, [dateValue.name]: dateValue.value });
+    const setDateValue = (dateValue) => {
+        setCurrentDate({
+            ...currentDate, [dateValue.name]: {
+                value: dateValue.value,
+                valid: validateDate(dateValue.value, TIME_FORMAT)
+            }
+        });
     }
     const setRateValue = (rate) => {
         setCurrentRate(rate);
@@ -106,29 +120,42 @@ const FeaturesForm = () => {
     }
 
     const checkIsValid = () => {
-        const dateStart = currentDateData.dateStart;
-        const dateFinish = currentDateData.dateFinish;
-
-        return isValid !== (dateStart.length !== 0 && dateFinish.length !== 0)
-            ? setIsValid(dateStart.length !== 0 && dateFinish.length !== 0)
-            : isValid
+        const isDateValid = (dateType) => dateType.valid && dateType.value.length === DATE_LETTER_COUNT
+        return isValid !== (isDateValid(currentDate.dateStart) && isDateValid(currentDate.dateFinish))
+            ? setIsValid(true)
+            : setIsValid(false)
     };
 
     const dispatch = useDispatch();
 
     useEffect(() => {
+        if (!rateData.length) {
+            dispatch(fetchRateDataEntity())
+                .then((response) => {
+                    const parsedRateData = response.map(({ id, price, rateTypeId: { unit, name } }) => {
+                        return {
+                            id,
+                            price,
+                            unit,
+                            name,
+                            form: FORM_RATE_NAME
+                        }
+                    })
+                    setRateData(parsedRateData)
+                })
+        }
+
         setCurrentColor(currentColor);
-        setCurrentDate(currentDateData);
+        setCurrentDate(currentDate);
         setCurrentRate(currentRate);
         setAdditionsList(additionsList);
 
         checkIsValid();
-        
         dispatch(setColor(currentColor));
-        dispatch(setDate(currentDateData));
+        dispatch(setDate(currentDate));
         dispatch(setRate(currentRate));
         dispatch(setAdditions(additionsList));
-    }, [currentColor, currentDateData, currentRate, additionsList])
+    }, [currentColor, currentDate, currentRate, additionsList])
 
     return (
         <form className=" features-form form">
@@ -150,7 +177,7 @@ const FeaturesForm = () => {
                         <ul className="features-form__list features-form__list--date">
                             {DateInputs.map((input) =>
                                 <li className="features-form__item" key={input.name}>
-                                    <TextInput setLocationDataValue={setDateStartValue} inputInfo={input} value={currentDateData[input.name]} />
+                                    <TextInput setDataValue={setDateValue} inputInfo={input} value={currentDate[input.name].value} isValid={currentDate[input.name].valid} validationText={'формат [ДД.ММ.ГГГГ ЧЧ:ММ]'} />
                                 </li>)}
                         </ul>
                     </fieldset>
@@ -158,9 +185,9 @@ const FeaturesForm = () => {
                     <fieldset className="features-form__fieldset features-form__fieldset--rate form__fieldset">
                         <legend className="features-form__legend form__legend">Тариф</legend>
                         <ul className="features-form__list features-form__list--rate">
-                            {RatesRadios.map(({ name, form, label }) =>
-                                <li className="features-form__item" key={name}>
-                                    <RadioInput key={name} name={name} form={form} label={label} setCurrentFilterValue={setRateValue} currentFilter={currentRate} />
+                            {rateData.map(({ id, price, unit, name, form }) =>
+                                <li className="features-form__item" key={id}>
+                                    <RadioInput key={id} name={name} form={form} label={getRateLabel(name, price, unit)} setCurrentFilterValue={setRateValue} currentFilter={currentRate} />
                                 </li>
                             )}
                         </ul>

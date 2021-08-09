@@ -1,16 +1,23 @@
-import { ActionType, Tabs, ModelTypes } from "../const.js";
+import dayjs from "dayjs";
+import { ActionType, Tabs, MODEL_FORM_RADIO_DEFAULT_NAME, TIME_FORMAT } from "../const.js";
 
 const initialState = {
     activeTab: Tabs.get('LOCATION'),
     city: '',
     pickpoint: '',
     model: '',
-    activeFilter: ModelTypes.ALL_MODELS,
+    activeFilter: MODEL_FORM_RADIO_DEFAULT_NAME,
     color: '',
     rate: '',
     additions: [],
-    dateStart: '',
-    dateFinish: '',
+    dateStart: {
+        value: dayjs().format(TIME_FORMAT),
+        valid: true
+    },
+    dateFinish: {
+        value: '',
+        valid: true
+    },
 
     modelsData: [],
     citiesData: [],

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Tabs, ModelTypes } from "../../const.js";
+import { Tabs, MODEL_FORM_RADIO_DEFAULT_NAME } from "../../const.js";
 import { setModel, setActiveFilter } from "../../store/action";
 import { fetchModelsDataEntity, fetchModelTagsDataEntity } from "../../store/api-action";
 
@@ -16,7 +16,7 @@ const FORM_NAME = "model-type"
 
 const MODEL_FORM_RADIO_DEFAULT = [
     {
-        name: "Все модели",
+        name: MODEL_FORM_RADIO_DEFAULT_NAME,
         form: FORM_NAME,
     }
 ]
@@ -61,7 +61,7 @@ const ModelForm = () => {
     const setCurrentFilterValue = (filter) => {
         setCurrentFilter(filter);
 
-        filter !== ModelTypes.ALL_MODELS
+        filter !== MODEL_FORM_RADIO_DEFAULT.name
             ? setModels(getFilteredModelData(initialModelsData, filter))
             : setModels(initialModelsData)
     };

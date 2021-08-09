@@ -64,12 +64,6 @@ const ActionType = {
     SET_PICKPOINT_DATA: "setPickpointData"
 };
 
-const ModelTypes = {
-    ALL_MODELS: "all-models",
-    ECONOMY: "economy",
-    PREMIUM: "premium"
-};
-
 const Colors = {
     ALL_COLOR: "all-color",
     RED: "red",
@@ -93,10 +87,12 @@ const ReceiptNames = {
     "right-wheel": "Правый руль",
     "all-color": "Любой",
     "red": "Красный",
-    "blue": "Голубой",
-    "by-minute": "Поминутно",
-    "by-day": "На сутки"
+    "blue": "Голубой"
 }
+
+const MODEL_FORM_RADIO_DEFAULT_NAME = "Все модели"
+
+const TIME_FORMAT = 'DD.MM.YYYY HH:mm'
 
 export {
     SLIDES_INFO,
@@ -105,9 +101,10 @@ export {
     Tabs,
     TabNames,
     ActionType,
-    ModelTypes,
     Colors,
     Rates,
     Additionals,
-    ReceiptNames
+    ReceiptNames,
+    MODEL_FORM_RADIO_DEFAULT_NAME,
+    TIME_FORMAT
 }

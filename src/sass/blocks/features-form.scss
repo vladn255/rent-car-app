@@ -17,6 +17,7 @@
 .features-form__item {
   position: relative;
   margin-right: 16px;
+  flex-wrap: wrap;
 
   @media (max-width: $mobile-width) {
     font-size: 12px;
@@ -26,8 +27,8 @@
 
 .features-form__legend {
   margin-bottom: 15px;
-  font-size: 12px;
-  line-height: 14px;
+  font-size: 14px;
+  line-height: 16px;
 }
 
 .features-form__list--color {
