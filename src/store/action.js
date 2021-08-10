@@ -43,6 +43,16 @@ const setDate = (date) => ({
 const fetchModelsData = (data) => ({
     type: ActionType.SET_MODELS_DATA,
     payload: data
+});
+
+const fetchCitiesData = (data) => ({
+    type: ActionType.SET_CITIES_DATA,
+    payload: data
+})
+
+const fetchPickpointData = (data) => ({
+    type: ActionType.SET_PICKPOINT_DATA,
+    payload: data
 })
 
 export {
@@ -54,5 +64,7 @@ export {
     setRate,
     setAdditions,
     setDate,
-    fetchModelsData
+    fetchModelsData,
+    fetchCitiesData,
+    fetchPickpointData
 }

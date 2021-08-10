@@ -3,28 +3,18 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { Tabs } from "../../const.js";
 import { setLocation } from "../../store/action";
+import { fetchCitiesEntity, fetchPickpoint } from "../../store/api-action";
 
-import Map from "../map/map.jsx";
+import MapComponent from "../map-component/map-component.jsx";
 import OrderReceipt from "../order-receipt/order-receipt.jsx";
-import TextInput from "../text-input/text-input.jsx";
+import AutocompleteTextInputs from "../autocomplete-text-inputs/autocomplete-text-inputs.jsx";
 import TabFormButton from "../tab-form-button/tab-form-button";
 
-const INPUT_INFO = [
-    {
-        name: "city",
-        additionalClass: "location",
-        placeholder: "Начните вводить город",
-        label: "Город"
-    },
-    {
-        name: "pickpoint",
-        additionalClass: "location",
-        placeholder: "Начните вводить пункт...",
-        label: "Пункт выдачи"
-    }
-];
-
 const BUTTON_LABEL = "Выбрать модель";
+const Labels = {
+    CITY: "city",
+    PICKPOINT: "pickpoint"
+};
 
 const LocationForm = () => {
     const [isValid, setIsValid] = useState(false);
@@ -32,14 +22,44 @@ const LocationForm = () => {
         city: useSelector((state) => state.city),
         pickpoint: useSelector((state) => state.pickpoint)
     });
+    const [citiesData, setCitiesData] = useState(useSelector((state) => state.citiesData));
+    const [pickpointData, setPickpointData] = useState(useSelector((state) => state.pickpointData));
+    const [pickpoints, setPickpoints] = useState([])
+    const [activeCity, setActiveCity] = useState(null)
+    const [activeMarker, setActiveMarker] = useState(null)
 
     const dispatch = useDispatch();
 
     useEffect(() => {
+        if (citiesData.length === 0) {
+            dispatch(fetchCitiesEntity())
+                .then((response) => {
+                    setCitiesData(response.map((city) => {
+                        return {
+                            id: city.id,
+                            value: city.name
+                        }
+                    }))
+                })
+
+            dispatch(fetchPickpoint()).then((response) => {
+                setPickpointData(response)
+
+            })
+        }
+
+        const filteredPoints = pickpointData.filter((point) => point.cityId !== null && point.cityId.name === locationData.city)
+        setPickpoints(filteredPoints.map((point) => {
+            return {
+                id: point.id,
+                value: point.address
+            }
+        }))
+
         setLocationData(locationData);
         checkIsValid();
         dispatch(setLocation(locationData));
-    }, [locationData])
+    }, [activeCity, activeMarker])
 
     const checkIsValid = () => {
         return isValid !== (locationData.city.length !== 0 && locationData.pickpoint.length !== 0)
@@ -47,27 +67,45 @@ const LocationForm = () => {
             : isValid
     };
 
-    const setLocationDataValue = (locationValue) => setLocationData({ ...locationData, [locationValue.name]: locationValue.value });
+    const setLocationDataValue = (locationValue) => {
+        setLocationData({ ...locationData, [locationValue.name]: locationValue.value })
 
+        if (locationValue.name === Labels.CITY) {
+            const filteredCity = citiesData.slice().filter((item) => item.value === locationValue.value)
 
+            if (filteredCity.length) {
+                setActiveCity(filteredCity[0].value)
+            }
+        }
+
+        if (locationValue.name === Labels.PICKPOINT) {
+            const filteredPoints = pickpoints.slice().filter((item) => item.value === locationValue.value)
+
+            if (filteredPoints.length) {
+                setActiveMarker(filteredPoints[0].value)
+            }
+        }
+    };
+
+    const resetLocationData = () => {
+        setLocationData({
+            city: '',
+            pickpoint: ''
+        })
+    }
 
     return (
-        <form className="location-form form">
+        <form className="location-form form" >
             <div className="order-page__form ">
                 <div className="order-page__form-wrapper location-form__wrapper">
                     <fieldset className="location-form__fieldset form__fieldset">
                         <legend className="visually-hidden">Форма выбора местоположения</legend>
-                        <ul className="location-form__list">
-                            {INPUT_INFO.map((input) =>
-                             <li className="location-form__item" key={input.name}>
-                                <TextInput key={name} setLocationDataValue={setLocationDataValue} inputInfo={input} value={locationData[input.name]} />
-                            </li>)}
-                        </ul>
+                        <AutocompleteTextInputs values={locationData} citiesData={citiesData} pickpointData={pickpoints} setLocationDataValue={setLocationDataValue} resetLocationData={resetLocationData} />
                     </fieldset>
 
                     <div className="order-page__selection location-form__map">
                         <h3 className="location-form__text">Выбрать на карте:</h3>
-                        <Map />
+                        <MapComponent activeCity={activeCity} markersData={pickpoints} activeMarker={activeMarker} />
                     </div>
                 </div>
 

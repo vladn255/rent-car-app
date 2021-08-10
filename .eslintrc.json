@@ -26,5 +26,8 @@
     },
     "rules": {
 
-    }
+    },
+    "globals": {
+        "process": true
+      }
 }

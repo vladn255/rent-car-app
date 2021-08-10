@@ -7,14 +7,18 @@ const ModelFormItem = ({ name, priceMin, priceMax, imgSrc, isActive, setModelVal
         setModelValue(name);
     }
 
-    let isValid = true;
+    const checkIsValid = () => {
+        let isValid = true;
 
-    if (!(typeof imgSrc === 'string')) {
-        isValid = false;
-    } else if ((typeof imgSrc === 'string')) {
-        if (!(imgSrc.includes('jpg') || imgSrc.includes('jpeg') || imgSrc.includes('png'))) {
+        if (typeof imgSrc !== 'string') {
             isValid = false;
+        } else if (typeof imgSrc === 'string') {
+            if (!(imgSrc.includes('jpg') || imgSrc.includes('jpeg') || imgSrc.includes('png'))) {
+                isValid = false;
+            }
         }
+
+        return isValid
     }
 
     return (
@@ -24,7 +28,7 @@ const ModelFormItem = ({ name, priceMin, priceMax, imgSrc, isActive, setModelVal
                     <h4 className="gallery__title">{name}</h4>
                     <p className="gallery__text">{`${priceMin} - ${priceMax} ₽`}</p>
                 </div>
-                {isValid
+                {checkIsValid()
                     ? <img className="gallery__picture" src={
                         imgSrc.includes('/files')
                             ? `https://api-factory.simbirsoft1.com${imgSrc}`

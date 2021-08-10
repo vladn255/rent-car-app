@@ -22,12 +22,11 @@ const ResultForm = () => {
             <div className="order-page__form-wrapper result__container">
                 <h3 className="visually-hidden">Детали заказа</h3>
                 <div className="result__wrapper">
-                    <p className="result__model">{`Hyndai, ${model}`}</p>
+                    <p className="result__model">{model}</p>
                     <p className="result__plate-number">K 761 HA 73</p>
                     <p className="result__additional"><b>Топливо</b> 100%</p>
                     <p className="result__additional"><b>Доступна с </b><span>{dateStart}</span></p>
                 </div>
-                {/* eslint-disable-next-line no-undef */}
                 <img className="result__picture" src={`${process.env.PUBLIC_URL}/img/gallery/image2.png`}
                     alt="ELANTRA view" width="256" height="116"></img>
             </div>
