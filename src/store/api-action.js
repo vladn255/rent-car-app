@@ -2,7 +2,7 @@ import { fetchModelsData, fetchCitiesData, fetchPickpointData } from "./action.j
 
 
 const fetchModelsDataEntity = () => (dispatch, _getState, api) => (
-    api.get('/db/car?&limit=10')
+    api.get('/db/car?&limit=50')
         .then(({ data: { data } }) => {
             dispatch(fetchModelsData(data));
             return data;

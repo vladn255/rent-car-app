@@ -13,7 +13,7 @@ const getFilteredSuggestions = (list, targetValue, setter, callback) => {
 }
 
 
-const AutocompleteTextInputs = ({ values: { city, pickpoint }, citiesData, pickpointData, setLocationDataValue, resetLocationData }) => {
+const AutocompleteTextInputs = ({ values: { city, pickpoint }, citiesData, pickpointData, setDataValue, resetLocationData }) => {
     const inputCityRef = useRef(null);
     const inputPickpointRef = useRef('');
     const [isListVisible, setIsListVisible] = useState(false);
@@ -22,7 +22,7 @@ const AutocompleteTextInputs = ({ values: { city, pickpoint }, citiesData, pickp
 
     const inputCityChangeHandler = (evt) => {
         evt.preventDefault();
-        setLocationDataValue({
+        setDataValue({
             name: 'city',
             value: evt.target.value
         })
@@ -36,7 +36,7 @@ const AutocompleteTextInputs = ({ values: { city, pickpoint }, citiesData, pickp
 
     const inputPickpointChangeHandler = (evt) => {
         evt.preventDefault();
-        setLocationDataValue({
+        setDataValue({
             name: 'pickpoint',
             value: evt.target.value
         })
@@ -53,7 +53,7 @@ const AutocompleteTextInputs = ({ values: { city, pickpoint }, citiesData, pickp
 
     const resetButtonPickpointHandler = (evt) => {
         evt.preventDefault();
-        setLocationDataValue({
+        setDataValue({
             name: 'pickpoint',
             value: ``
         });
@@ -101,7 +101,7 @@ const AutocompleteTextInputs = ({ values: { city, pickpoint }, citiesData, pickp
 }
 
 AutocompleteTextInputs.propTypes = {
-    setLocationDataValue: PropTypes.func.isRequired,
+    setDataValue: PropTypes.func.isRequired,
     citiesData: PropTypes.array.isRequired,
     pickpointData: PropTypes.array.isRequired,
     values: PropTypes.shape({

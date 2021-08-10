@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 
 const RadioInput = ({ name, form, label, setCurrentFilterValue, currentFilter }) => {
-
+    
     const changeModelTypeHandler = (evt) => setCurrentFilterValue(evt.target.value);
 
     return (

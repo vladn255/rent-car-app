@@ -9,7 +9,7 @@ import OrderNavItem from "../order-nav-item/order-nav-item.jsx";
 
 const OrderNav = ({ activeTab }) => {
     const dispatch = useDispatch();
-    // let isTabDisabled = false;
+    let isTabDisabled = false;
     let orderNavList = [];
 
     const tabButtonClickHandler = (evt) => {
@@ -24,13 +24,13 @@ const OrderNav = ({ activeTab }) => {
                 tab={value}
                 tabButtonClickHandler={tabButtonClickHandler}
                 isActiveTab={value === activeTab}
-                isTabDisabled={false}
+                isTabDisabled={isTabDisabled}
             />
         );
 
-        // if (value === activeTab) {
-        //     isTabDisabled = true;
-        // }
+        if (value === activeTab) {
+            isTabDisabled = true;
+        }
     }
 
     return <ol className="order-page__nav order-nav">{orderNavList}</ol>;

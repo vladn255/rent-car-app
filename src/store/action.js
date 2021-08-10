@@ -55,6 +55,11 @@ const fetchPickpointData = (data) => ({
     payload: data
 })
 
+const setModelColors = (data) => ({
+    type: ActionType.SET_MODEL_COLORS,
+    payload: data
+})
+
 export {
     changeTab,
     setLocation,
@@ -66,5 +71,6 @@ export {
     setDate,
     fetchModelsData,
     fetchCitiesData,
-    fetchPickpointData
+    fetchPickpointData,
+    setModelColors
 }
