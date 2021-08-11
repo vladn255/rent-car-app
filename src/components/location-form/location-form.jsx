@@ -19,14 +19,14 @@ const Labels = {
 const LocationForm = () => {
     const [isValid, setIsValid] = useState(false);
     const [locationData, setLocationData] = useState({
-        city: useSelector((state) => state.city),
-        pickpoint: useSelector((state) => state.pickpoint)
+        city: useSelector((state) => state.city.name),
+        pickpoint: useSelector((state) => state.pickpoint.name)
     });
     const [citiesData, setCitiesData] = useState(useSelector((state) => state.citiesData));
     const [pickpointData, setPickpointData] = useState(useSelector((state) => state.pickpointData));
     const [pickpoints, setPickpoints] = useState([])
-    const [activeCity, setActiveCity] = useState(null)
-    const [activeMarker, setActiveMarker] = useState(null)
+    const [activeCity, setActiveCity] = useState(useSelector((state) => state.city))
+    const [activeMarker, setActiveMarker] = useState(useSelector((state) => state.pickpoint))
 
     const dispatch = useDispatch();
 
@@ -58,7 +58,10 @@ const LocationForm = () => {
 
         setLocationData(locationData);
         checkIsValid();
-        dispatch(setLocation(locationData));
+        dispatch(setLocation({
+            city: activeCity,
+            pickpoint: activeMarker
+        }));
     }, [activeCity, activeMarker])
 
     const checkIsValid = () => {
@@ -74,7 +77,10 @@ const LocationForm = () => {
             const filteredCity = citiesData.slice().filter((item) => item.value === locationValue.value)
 
             if (filteredCity.length) {
-                setActiveCity(filteredCity[0].value)
+                setActiveCity({
+                    id: filteredCity[0].id,
+                    name: filteredCity[0].value
+                })
             }
         }
 
@@ -82,7 +88,10 @@ const LocationForm = () => {
             const filteredPoints = pickpoints.slice().filter((item) => item.value === locationValue.value)
 
             if (filteredPoints.length) {
-                setActiveMarker(filteredPoints[0].value)
+                setActiveMarker({
+                    name: filteredPoints[0].value,
+                    id: filteredPoints[0].id
+                })
             }
         }
     };
@@ -105,7 +114,7 @@ const LocationForm = () => {
 
                     <div className="order-page__selection location-form__map">
                         <h3 className="location-form__text">Выбрать на карте:</h3>
-                        <MapComponent activeCity={activeCity} markersData={pickpoints} activeMarker={activeMarker} />
+                        <MapComponent activeCity={activeCity.name} markersData={pickpoints} activeMarker={activeMarker.name} />
                     </div>
                 </div>
 

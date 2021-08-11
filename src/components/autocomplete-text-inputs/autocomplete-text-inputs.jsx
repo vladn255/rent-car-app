@@ -64,7 +64,7 @@ const AutocompleteTextInputs = ({ values: { city, pickpoint }, citiesData, pickp
     return (
         <ul className="location-form__list">
             <li className="location-form__item">
-                <input className={`location-form__input form__input`} list={`city-list`} name={`city`} id={`city`} value={city} placeholder={`Начните вводить город`} onChange={inputCityChangeHandler} required ref={inputCityRef} />
+                <input className={`location-form__input form__input`} list={`city-list`} name={`city`} id={`city`} value={city.name} placeholder={`Начните вводить город`} onChange={inputCityChangeHandler} required ref={inputCityRef} />
                 <label className={`location-form__label form__label`} htmlFor={`city`}>Город</label>
 
                 <datalist id={`city-list`} className={`form__list ${isListVisible ? '' : 'form__list--hidden'}`}>
@@ -81,7 +81,7 @@ const AutocompleteTextInputs = ({ values: { city, pickpoint }, citiesData, pickp
             </li>
 
             <li className="location-form__item">
-                <input className={`location-form__input form__input`} list={`pickpoint-list`} name={`pickpoint`} id={`pickpoint`} value={pickpoint} placeholder={`Начните вводить пункт...`} onChange={inputPickpointChangeHandler} required ref={inputPickpointRef} />
+                <input className={`location-form__input form__input`} list={`pickpoint-list`} name={`pickpoint`} id={`pickpoint`} value={pickpoint.name} placeholder={`Начните вводить пункт...`} onChange={inputPickpointChangeHandler} required ref={inputPickpointRef} />
                 <label className={`location-form__label form__label`} htmlFor={`pickpoint`}>Пункт выдачи</label>
 
                 <datalist id={`pickpoint-list`} className={`form__list ${isListVisible ? '' : 'form__list--hidden'}`}>
@@ -106,7 +106,7 @@ AutocompleteTextInputs.propTypes = {
     pickpointData: PropTypes.array.isRequired,
     values: PropTypes.shape({
         city: PropTypes.string.isRequired,
-        pickpoint: PropTypes.string.isRequired
+        pickpoint: PropTypes.string.isRequired,
     }).isRequired,
     resetLocationData: PropTypes.func.isRequired
 }

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
 import CustomParseFormat from "dayjs/plugin/customParseFormat";
 
 import { ReceiptNames, TIME_FORMAT, ReceiptCosts } from "../../const";
 import { isDateValid } from "../../utils";
 import OrderReceiptItem from "../order-receipt-item/order-receipt-item";
+import { setPrice } from "../../store/action";
 
 dayjs.extend(CustomParseFormat)
 
@@ -33,7 +34,7 @@ const getHoursDuration = (durationInMinutes) => {
         : ''
 }
 const getMinutesDuration = (durationInMinutes) => {
-    const duration = durationInMinutes / Math.trunc(durationInMinutes / MINUTES_IN_AN_HOUR % HOURS_IN_A_DAY) % MINUTES_IN_AN_HOUR
+    const duration = Math.trunc(durationInMinutes / Math.trunc(durationInMinutes / MINUTES_IN_AN_HOUR % HOURS_IN_A_DAY) % MINUTES_IN_AN_HOUR)
     return (duration !== 0) && (!isNaN(duration))
         ? `${duration}м`
         : ''
@@ -55,6 +56,8 @@ const getCurrentCost = (list) => {
 }
 
 const OrderReceipt = () => {
+    const dispatch = useDispatch();
+
     const city = useSelector((state) => state.city);
     const pickpoint = useSelector((state) => state.pickpoint);
     const model = useSelector((state) => state.model);
@@ -77,8 +80,8 @@ const OrderReceipt = () => {
     const initialDetails = [
         {
             name: `Пункт выдачи`,
-            value: [city, pickpoint].join(``),
-            text: [city, pickpoint].join(`\n`)
+            value: [city.name, pickpoint.name].join(``),
+            text: [city.name, pickpoint.name].join(`\n`)
         },
         {
             name: `Модель`,
@@ -124,7 +127,9 @@ const OrderReceipt = () => {
         })
 
         if (!(JSON.stringify(details) === JSON.stringify(newDetails))) {
-            setCost(getCurrentCost(newDetails))
+            const newCost = getCurrentCost(newDetails)
+            setCost(newCost)
+            dispatch(setPrice(newCost))
             setDetails(newDetails);
         }
 

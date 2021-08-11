@@ -23,7 +23,7 @@ function App() {
                 <Order />
             </Route>
 
-            <Route exact path={RoutePath.CHECKOUT}>
+            <Route exact path={`${RoutePath.CHECKOUT}:id`}>
                 <MainNav />
                 <Checkout />
             </Route>

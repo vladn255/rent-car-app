@@ -60,6 +60,26 @@ const setModelColors = (data) => ({
     payload: data
 })
 
+const setFuelTank = (fuel) => ({
+    type: ActionType.SET_FUEL_TANK,
+    payload: fuel
+})
+
+const setOrderId = (id) => ({
+    type: ActionType.SET_ORDER_ID,
+    payload: id
+})
+
+const setPrice = (price) => ({
+    type: ActionType.SET_PRICE,
+    payload: price
+})
+
+const setOrderData = (orderData) => ({
+    type: ActionType.SET_ORDER_DATA,
+    payload: orderData
+})
+
 export {
     changeTab,
     setLocation,
@@ -72,5 +92,9 @@ export {
     fetchModelsData,
     fetchCitiesData,
     fetchPickpointData,
-    setModelColors
+    setModelColors,
+    setFuelTank,
+    setOrderId,
+    setPrice,
+    setOrderData
 }
