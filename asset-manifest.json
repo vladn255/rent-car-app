@@ -1,21 +1,21 @@
 {
   "files": {
     "main.css": "/rent-car-app/static/css/main.84c33fb9.chunk.css",
-    "main.js": "/rent-car-app/static/js/main.ef0a6d84.chunk.js",
-    "main.js.map": "/rent-car-app/static/js/main.ef0a6d84.chunk.js.map",
+    "main.js": "/rent-car-app/static/js/main.615299a7.chunk.js",
+    "main.js.map": "/rent-car-app/static/js/main.615299a7.chunk.js.map",
     "runtime-main.js": "/rent-car-app/static/js/runtime-main.5eabecba.js",
     "runtime-main.js.map": "/rent-car-app/static/js/runtime-main.5eabecba.js.map",
-    "static/js/2.dfef3827.chunk.js": "/rent-car-app/static/js/2.dfef3827.chunk.js",
-    "static/js/2.dfef3827.chunk.js.map": "/rent-car-app/static/js/2.dfef3827.chunk.js.map",
+    "static/js/2.42310a17.chunk.js": "/rent-car-app/static/js/2.42310a17.chunk.js",
+    "static/js/2.42310a17.chunk.js.map": "/rent-car-app/static/js/2.42310a17.chunk.js.map",
     "index.html": "/rent-car-app/index.html",
     "static/css/main.84c33fb9.chunk.css.map": "/rent-car-app/static/css/main.84c33fb9.chunk.css.map",
-    "static/js/2.dfef3827.chunk.js.LICENSE.txt": "/rent-car-app/static/js/2.dfef3827.chunk.js.LICENSE.txt",
+    "static/js/2.42310a17.chunk.js.LICENSE.txt": "/rent-car-app/static/js/2.42310a17.chunk.js.LICENSE.txt",
     "static/media/style.scss": "/rent-car-app/static/media/tick-icon.599a4157.svg"
   },
   "entrypoints": [
     "static/js/runtime-main.5eabecba.js",
-    "static/js/2.dfef3827.chunk.js",
+    "static/js/2.42310a17.chunk.js",
     "static/css/main.84c33fb9.chunk.css",
-    "static/js/main.ef0a6d84.chunk.js"
+    "static/js/main.615299a7.chunk.js"
   ]
 }
