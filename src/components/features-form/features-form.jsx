@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import dayjs from "dayjs";
+import CustomParseFormat from "dayjs/plugin/customParseFormat";
 
-import { Tabs, Colors, Rates, Additionals } from "../../const.js";
+import { Tabs, Additionals, TIME_FORMAT, ReceiptNames, ReceiptCosts, FEATURES_FORM_COLOR_DEFAULT_NAME } from "../../const.js";
+import { isDateValid } from "../../utils.js"
 import { setColor, setDate, setRate, setAdditions } from "../../store/action";
+import { fetchRateDataEntity } from "../../store/api-action";
 
 import OrderReceipt from "../order-receipt/order-receipt.jsx";
 import TabFormButton from "../tab-form-button/tab-form-button.jsx";
@@ -10,36 +14,7 @@ import TextInput from "../text-input/text-input.jsx";
 import RadioInput from "../radio-input/radio-input.jsx";
 import CheckboxInput from "../checkbox-input/checkbox-input.jsx";
 
-const ColorRadios = [
-    {
-        name: Colors.ALL_COLOR,
-        form: "color",
-        label: "Любой"
-    },
-    {
-        name: Colors.RED,
-        form: "color",
-        label: "Красный"
-    },
-    {
-        name: Colors.BLUE,
-        form: "color",
-        label: "Голубой"
-    }
-];
-
-const RatesRadios = [
-    {
-        name: Rates.BY_MINUTE,
-        form: "rate",
-        label: "Поминутно, 7₽/мин"
-    },
-    {
-        name: Rates.BY_DAY,
-        form: "rate",
-        label: "На сутки, 1999₽/мин"
-    }
-];
+dayjs.extend(CustomParseFormat)
 
 const DateInputs = [
     {
@@ -60,41 +35,75 @@ const AdditionalsCheckboxes = [
     {
         name: Additionals.FULL_TANK,
         form: "features",
-        label: "Полный бак, 500₽"
+        label: `${ReceiptNames[Additionals.FULL_TANK]}, ${ReceiptCosts[Additionals.FULL_TANK]}₽`
     },
     {
         name: Additionals.CHILD_SEAT,
         form: "features",
-        label: "Детское кресло, 200₽"
+        label: `${ReceiptNames[Additionals.CHILD_SEAT]}, ${ReceiptCosts[Additionals.CHILD_SEAT]}₽`
     },
     {
         name: Additionals.RIGHT_WHEEL,
         form: "features",
-        label: "Правый руль, 1600₽"
+        label: `${ReceiptNames[Additionals.RIGHT_WHEEL]}, ${ReceiptCosts[Additionals.RIGHT_WHEEL]}₽`
     },
 ]
 
 const BUTTON_LABEL = "Итого";
+const FORM_RATE_NAME = "rate";
+const FORM_COLOR_NAME = "color";
+
+const getRateLabel = (name, price, unit) => {
+    return `${name}, ${price}₽/${unit}`
+}
+
+const validateDate = (date, format) => {
+    return dayjs(date, format).format(format) === date;
+}
 
 const FeaturesForm = () => {
+    const stateAdditions = useSelector((state) => state.additions)
+    const modelColors = useSelector((state) => state.modelColors)
+
     const [isValid, setIsValid] = useState(false);
-    const [currentColor, setCurrentColor] = useState(useSelector((state) => state.color));
-    const [currentDateData, setCurrentDate] = useState({
-        dateStart: useSelector((state) => state.dateStart),
-        dateFinish: useSelector((state) => state.dateFinish)
+    const [currentColor, setCurrentColor] = useState(FEATURES_FORM_COLOR_DEFAULT_NAME);
+    const [currentDate, setCurrentDate] = useState({
+        dateStart: {
+            value: useSelector((state) => state.dateStart.value),
+            valid: true
+        },
+        dateFinish: {
+            value: useSelector((state) => state.dateFinish.value),
+            valid: true
+        }
     });
     const [currentRate, setCurrentRate] = useState(useSelector((state) => state.rate));
-    const stateAdditions = useSelector((state) => state.additions)
+    const [rateData, setRateData] = useState([])
     const [additionsList, setAdditionsList] = useState(stateAdditions);
+
+
+    const colorRadios = modelColors.map((color) => {
+        return {
+            name: color,
+            form: FORM_COLOR_NAME,
+            label: color
+        }
+    })
 
     const setColorValue = (color) => {
         setCurrentColor(color)
     };
-    const setDateStartValue = (dateValue) => {
-        setCurrentDate({ ...currentDateData, [dateValue.name]: dateValue.value });
+    const setDateValue = (dateValue) => {
+        setCurrentDate({
+            ...currentDate, [dateValue.name]: {
+                value: dateValue.value,
+                valid: validateDate(dateValue.value, TIME_FORMAT)
+            }
+        });
     }
-    const setRateValue = (rate) => {
-        setCurrentRate(rate);
+    const setRateValue = (name) => {
+        const activeRate = rateData.find((rate) => rate.name === name)
+        setCurrentRate(activeRate);
     }
     const setAdditionsValue = (feature) => {
         const newList = stateAdditions.slice();
@@ -106,29 +115,41 @@ const FeaturesForm = () => {
     }
 
     const checkIsValid = () => {
-        const dateStart = currentDateData.dateStart;
-        const dateFinish = currentDateData.dateFinish;
-
-        return isValid !== (dateStart.length !== 0 && dateFinish.length !== 0)
-            ? setIsValid(dateStart.length !== 0 && dateFinish.length !== 0)
-            : isValid
+        return isDateValid(currentDate.dateStart) && isDateValid(currentDate.dateFinish) && currentRate.name !== ''
+            ? setIsValid(true)
+            : setIsValid(false)
     };
 
     const dispatch = useDispatch();
 
     useEffect(() => {
+        if (!rateData.length) {
+            dispatch(fetchRateDataEntity())
+                .then((response) => {
+                    const parsedRateData = response.map(({ id, price, rateTypeId: { unit, name } }) => {
+                        return {
+                            id,
+                            price,
+                            unit,
+                            name,
+                            form: FORM_RATE_NAME
+                        }
+                    })
+                    setRateData(parsedRateData)
+                })
+        }
+
         setCurrentColor(currentColor);
-        setCurrentDate(currentDateData);
+        setCurrentDate(currentDate);
         setCurrentRate(currentRate);
         setAdditionsList(additionsList);
 
         checkIsValid();
-        
         dispatch(setColor(currentColor));
-        dispatch(setDate(currentDateData));
+        dispatch(setDate(currentDate));
         dispatch(setRate(currentRate));
         dispatch(setAdditions(additionsList));
-    }, [currentColor, currentDateData, currentRate, additionsList])
+    }, [currentColor, currentDate, currentRate, additionsList])
 
     return (
         <form className=" features-form form">
@@ -137,7 +158,7 @@ const FeaturesForm = () => {
                     <fieldset className="features-form__fieldset features-form__fieldset--color form__fieldset">
                         <legend className="features-form__legend form__legend">Цвет</legend>
                         <ul className="features-form__list features-form__list--color">
-                            {ColorRadios.map(({ name, form, label }) =>
+                            {colorRadios.map(({ name, form, label }) =>
                                 <li className="features-form__item" key={name}>
                                     <RadioInput key={name} name={name} form={form} label={label} setCurrentFilterValue={setColorValue} currentFilter={currentColor} />
                                 </li>
@@ -150,7 +171,7 @@ const FeaturesForm = () => {
                         <ul className="features-form__list features-form__list--date">
                             {DateInputs.map((input) =>
                                 <li className="features-form__item" key={input.name}>
-                                    <TextInput setLocationDataValue={setDateStartValue} inputInfo={input} value={currentDateData[input.name]} />
+                                    <TextInput setDataValue={setDateValue} inputInfo={input} value={currentDate[input.name].value} isValid={currentDate[input.name].valid} validationText={'формат [ДД.ММ.ГГГГ ЧЧ:ММ]'} />
                                 </li>)}
                         </ul>
                     </fieldset>
@@ -158,9 +179,9 @@ const FeaturesForm = () => {
                     <fieldset className="features-form__fieldset features-form__fieldset--rate form__fieldset">
                         <legend className="features-form__legend form__legend">Тариф</legend>
                         <ul className="features-form__list features-form__list--rate">
-                            {RatesRadios.map(({ name, form, label }) =>
-                                <li className="features-form__item" key={name}>
-                                    <RadioInput key={name} name={name} form={form} label={label} setCurrentFilterValue={setRateValue} currentFilter={currentRate} />
+                            {rateData.map(({ id, price, unit, name, form }) =>
+                                <li className="features-form__item" key={id}>
+                                    <RadioInput key={id} name={name} form={form} label={getRateLabel(name, price, unit)} setCurrentFilterValue={setRateValue} currentFilter={currentRate.name} />
                                 </li>
                             )}
                         </ul>

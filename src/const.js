@@ -61,25 +61,9 @@ const ActionType = {
     SET_ADDITIONS: "setAdditions",
     SET_MODELS_DATA: "setModelsData",
     SET_CITIES_DATA: "setCitiesData",
-    SET_PICKPOINT_DATA: "setPickpointData"
+    SET_PICKPOINT_DATA: "setPickpointData",
+    SET_MODEL_COLORS: "setModelColors"
 };
-
-const ModelTypes = {
-    ALL_MODELS: "all-models",
-    ECONOMY: "economy",
-    PREMIUM: "premium"
-};
-
-const Colors = {
-    ALL_COLOR: "all-color",
-    RED: "red",
-    BLUE: "blue"
-}
-
-const Rates = {
-    BY_MINUTE: "by-minute",
-    BY_DAY: "by-day"
-}
 
 const Additionals = {
     FULL_TANK: "full-tank",
@@ -91,12 +75,21 @@ const ReceiptNames = {
     "full-tank": "Полный бак",
     "child-seat": "Детское кресло",
     "right-wheel": "Правый руль",
-    "all-color": "Любой",
-    "red": "Красный",
-    "blue": "Голубой",
-    "by-minute": "Поминутно",
-    "by-day": "На сутки"
 }
+
+const ReceiptCosts = {
+    "full-tank": 500,
+    "child-seat": 200,
+    "right-wheel": 1600,
+}
+
+const MODEL_FORM_RADIO_DEFAULT_NAME = "Все модели"
+
+const FEATURES_FORM_COLOR_DEFAULT_NAME = "Любой"
+
+const TIME_FORMAT = 'DD.MM.YYYY HH:mm'
+
+const DATE_LETTER_COUNT = 16;
 
 export {
     SLIDES_INFO,
@@ -105,9 +98,11 @@ export {
     Tabs,
     TabNames,
     ActionType,
-    ModelTypes,
-    Colors,
-    Rates,
     Additionals,
-    ReceiptNames
+    ReceiptNames,
+    ReceiptCosts,
+    MODEL_FORM_RADIO_DEFAULT_NAME,
+    TIME_FORMAT,
+    FEATURES_FORM_COLOR_DEFAULT_NAME,
+    DATE_LETTER_COUNT
 }

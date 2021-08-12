@@ -1,24 +1,14 @@
 import React from "react";
 import PropTypes from 'prop-types';
 
-const ModelFormItem = ({ name, priceMin, priceMax, imgSrc, isActive, setModelValue }) => {
+import ModelPhoto from "../model-photo/model-photo";
+
+const MODEL_FORM_PHOTO_CLASS = "gallery__picture"
+
+const ModelFormItem = ({ name, id, priceMin, priceMax, imgSrc, isActive, setModelValue }) => {
     const galleryButtonClickHandler = (evt) => {
         evt.preventDefault();
-        setModelValue(name);
-    }
-
-    const checkIsValid = () => {
-        let isValid = true;
-
-        if (typeof imgSrc !== 'string') {
-            isValid = false;
-        } else if (typeof imgSrc === 'string') {
-            if (!(imgSrc.includes('jpg') || imgSrc.includes('jpeg') || imgSrc.includes('png'))) {
-                isValid = false;
-            }
-        }
-
-        return isValid
+        setModelValue(id);
     }
 
     return (
@@ -28,15 +18,7 @@ const ModelFormItem = ({ name, priceMin, priceMax, imgSrc, isActive, setModelVal
                     <h4 className="gallery__title">{name}</h4>
                     <p className="gallery__text">{`${priceMin} - ${priceMax} ₽`}</p>
                 </div>
-                {checkIsValid()
-                    ? <img className="gallery__picture" src={
-                        imgSrc.includes('/files')
-                            ? `https://api-factory.simbirsoft1.com${imgSrc}`
-                            : imgSrc
-                    } alt={`${name} view`} width="256" height="116" />
-                    : <div className="gallery__fallback"></div>
-                }
-
+                <ModelPhoto name={name} imgSrc={imgSrc} className={MODEL_FORM_PHOTO_CLASS}/>
             </button>
         </article>
     )
@@ -44,6 +26,7 @@ const ModelFormItem = ({ name, priceMin, priceMax, imgSrc, isActive, setModelVal
 
 ModelFormItem.propTypes = {
     name: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
     priceMin: PropTypes.number.isRequired,
     priceMax: PropTypes.number.isRequired,
     imgSrc: PropTypes.oneOfType([PropTypes.string, PropTypes.object]).isRequired,

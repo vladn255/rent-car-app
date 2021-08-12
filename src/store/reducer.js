@@ -1,16 +1,39 @@
-import { ActionType, Tabs, ModelTypes } from "../const.js";
+import dayjs from "dayjs";
+import {
+    ActionType,
+    Tabs,
+    MODEL_FORM_RADIO_DEFAULT_NAME,
+    TIME_FORMAT
+} from "../const.js";
 
 const initialState = {
     activeTab: Tabs.get('LOCATION'),
     city: '',
     pickpoint: '',
-    model: '',
-    activeFilter: ModelTypes.ALL_MODELS,
+    model: {
+        name: '',
+        number: '',
+        tank: '',
+        priceMin: 0
+    },
+    activeFilter: MODEL_FORM_RADIO_DEFAULT_NAME,
     color: '',
-    rate: '',
+    modelColors: [],
+    rate: {
+        id: '',
+        name: '',
+        price: 0,
+        unit: ''
+    },
     additions: [],
-    dateStart: '',
-    dateFinish: '',
+    dateStart: {
+        value: dayjs().format(TIME_FORMAT),
+        valid: true
+    },
+    dateFinish: {
+        value: '',
+        valid: true
+    },
 
     modelsData: [],
     citiesData: [],
@@ -85,6 +108,12 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 pickpointData: action.payload
+            }
+
+        case ActionType.SET_MODEL_COLORS:
+            return {
+                ...state,
+                modelColors: action.payload
             }
 
         default: {

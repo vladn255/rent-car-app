@@ -100,7 +100,7 @@ const LocationForm = () => {
                 <div className="order-page__form-wrapper location-form__wrapper">
                     <fieldset className="location-form__fieldset form__fieldset">
                         <legend className="visually-hidden">Форма выбора местоположения</legend>
-                        <AutocompleteTextInputs values={locationData} citiesData={citiesData} pickpointData={pickpoints} setLocationDataValue={setLocationDataValue} resetLocationData={resetLocationData} />
+                        <AutocompleteTextInputs values={locationData} citiesData={citiesData} pickpointData={pickpoints} setDataValue={setLocationDataValue} resetLocationData={resetLocationData} />
                     </fieldset>
 
                     <div className="order-page__selection location-form__map">

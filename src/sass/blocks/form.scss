@@ -15,6 +15,11 @@
   padding: 0;
 }
 
+.form__validation-message {
+  color: red;
+  text-align: left;
+}
+
 .form__reset-button-wrapper {
   position: absolute;
   right: 0;
@@ -125,5 +130,9 @@
 }
 
 .form__reset-button-wrapper--hidden {
+  display: none;
+}
+
+.form__validation-message--hidden {
   display: none;
 }

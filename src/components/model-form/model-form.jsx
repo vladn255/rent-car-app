@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-import { Tabs, ModelTypes } from "../../const.js";
-import { setModel, setActiveFilter } from "../../store/action";
+import { Tabs, MODEL_FORM_RADIO_DEFAULT_NAME, FEATURES_FORM_COLOR_DEFAULT_NAME } from "../../const.js";
+import { setModel, setActiveFilter, setModelColors } from "../../store/action";
 import { fetchModelsDataEntity, fetchModelTagsDataEntity } from "../../store/api-action";
 
 import ModelFormItem from "../model-form-item/model-form-item.jsx";
@@ -16,10 +16,12 @@ const FORM_NAME = "model-type"
 
 const MODEL_FORM_RADIO_DEFAULT = [
     {
-        name: "Все модели",
+        name: MODEL_FORM_RADIO_DEFAULT_NAME,
         form: FORM_NAME,
     }
 ]
+
+const FEATURES_FORM_COLOR_DEFAULT = [FEATURES_FORM_COLOR_DEFAULT_NAME]
 
 const getFilteredModelData = (modelData, filterValue) => {
     return modelData.slice().filter((model) => {
@@ -43,7 +45,8 @@ const ModelForm = () => {
             .then((response) => {
                 setModels(response)
             })
-            .then(() => dispatch(fetchModelTagsDataEntity()))
+
+        dispatch(fetchModelTagsDataEntity())
             .then((categoryData) => {
                 const categoryTags = categoryData.map((category) => {
                     return {
@@ -56,12 +59,16 @@ const ModelForm = () => {
             })
     }
 
-    const setModelValue = (modelValue) => setCurrentModel(modelValue);
+    const setModelValue = (modelId) => {
+        const activeModel = models.find((model) => model.id === modelId)
+        setCurrentModel(activeModel)
+        dispatch(setModelColors(FEATURES_FORM_COLOR_DEFAULT.concat(activeModel.colors)))
+    };
 
     const setCurrentFilterValue = (filter) => {
         setCurrentFilter(filter);
 
-        filter !== ModelTypes.ALL_MODELS
+        filter !== MODEL_FORM_RADIO_DEFAULT.name
             ? setModels(getFilteredModelData(initialModelsData, filter))
             : setModels(initialModelsData)
     };
@@ -75,6 +82,7 @@ const ModelForm = () => {
     useEffect(() => {
         setCurrentFilter(currentFilter);
         setCurrentModel(currentModel);
+
         checkIsValid();
         dispatch(setModel(currentModel));
         dispatch(setActiveFilter(currentFilter));
@@ -97,7 +105,7 @@ const ModelForm = () => {
 
                     <div className="order-page__selection model-form__gallery gallery">
                         {models?.length !== 0
-                            ? models.map(({ id, name, priceMin, priceMax, thumbnail: { path } }) => <ModelFormItem key={id} name={name} priceMin={priceMin} priceMax={priceMax} imgSrc={path} isActive={name === currentModel} setModelValue={setModelValue} />)
+                            ? models.map(({ id, name, priceMin, priceMax, thumbnail: { path } }) => <ModelFormItem key={id} id={id} name={name} priceMin={priceMin} priceMax={priceMax} imgSrc={path} isActive={name === currentModel} setModelValue={setModelValue} />)
                             : <h4>Данные загружаются</h4>}
                     </div>
                 </div>
