@@ -48,21 +48,13 @@ const LocationForm = () => {
             })
         }
 
-        const filteredPoints = pickpointData.filter((point) => point.cityId !== null && point.cityId.name === locationData.city)
-        setPickpoints(filteredPoints.map((point) => {
-            return {
-                id: point.id,
-                value: point.address
-            }
-        }))
-
         setLocationData(locationData);
         checkIsValid();
         dispatch(setLocation({
             city: activeCity,
             pickpoint: activeMarker
         }));
-    }, [activeCity, activeMarker])
+    }, [activeCity, activeMarker, pickpoints])
 
     const checkIsValid = () => {
         return isValid !== (locationData.city.length !== 0 && locationData.pickpoint.length !== 0)
@@ -81,6 +73,14 @@ const LocationForm = () => {
                     id: filteredCity[0].id,
                     name: filteredCity[0].value
                 })
+
+                const filteredPoints = pickpointData.filter((point) => point.cityId !== null && point.cityId.name === filteredCity[0].value)
+                setPickpoints(filteredPoints.map((point) => {
+                    return {
+                        id: point.id,
+                        value: point.address
+                    }
+                }))
             }
         }
 
@@ -89,7 +89,7 @@ const LocationForm = () => {
 
             if (filteredPoints.length) {
                 setActiveMarker({
-                    name: filteredPoints[0].value,
+                    value: filteredPoints[0].value,
                     id: filteredPoints[0].id
                 })
             }
@@ -114,7 +114,7 @@ const LocationForm = () => {
 
                     <div className="order-page__selection location-form__map">
                         <h3 className="location-form__text">Выбрать на карте:</h3>
-                        <MapComponent activeCity={activeCity.name} markersData={pickpoints} activeMarker={activeMarker.name} />
+                        <MapComponent activeCity={activeCity.name} markersData={pickpoints} activeMarker={activeMarker.value} />
                     </div>
                 </div>
 

@@ -140,7 +140,7 @@ const OrderReceipt = () => {
         <div className="order-page__receipt receipt">
             <h3 className="receipt__title">Ваш заказ:</h3>
             <ul className="receipt__list">
-                {details.filter((detail) => detail.value.length !== 0)
+                {details.filter((detail) => detail.value)
                     .map((detail) => <OrderReceiptItem key={detail.name} name={detail.name} value={detail.text} />)}
             </ul>
             <p className="receipt__cost"><b>Цена:</b>{` ${cost} ₽`}</p>

@@ -68,14 +68,8 @@ const FeaturesForm = () => {
     const [isValid, setIsValid] = useState(false);
     const [currentColor, setCurrentColor] = useState(FEATURES_FORM_COLOR_DEFAULT_NAME);
     const [currentDate, setCurrentDate] = useState({
-        dateStart: {
-            value: useSelector((state) => state.dateStart.value),
-            valid: true
-        },
-        dateFinish: {
-            value: useSelector((state) => state.dateFinish.value),
-            valid: true
-        }
+        dateStart: useSelector((state) => state.dateStart),
+        dateFinish: useSelector((state) => state.dateFinish)
     });
     const [currentRate, setCurrentRate] = useState(useSelector((state) => state.rate));
     const [rateData, setRateData] = useState([])
@@ -115,7 +109,7 @@ const FeaturesForm = () => {
     }
 
     const checkIsValid = () => {
-        return isDateValid(currentDate.dateStart) && isDateValid(currentDate.dateFinish) && currentRate.name !== ''
+        return isDateValid(currentDate.dateStart) && isDateValid(currentDate.dateFinish) && currentRate.name
             ? setIsValid(true)
             : setIsValid(false)
     };

@@ -51,7 +51,7 @@ const Checkout = () => {
                                     <p className="result__model">{orderData.car.name}</p>
                                     <p className="result__plate-number">{orderData.car.number}</p>
                                     <p className="result__additional"><b>Топливо </b>{`${fuel}%`}</p>
-                                    <p className="result__additional"><b>Доступна с </b><span>{orderData.dateFrom.value}</span></p>
+                                    <p className="result__additional"><b>Доступна с </b><span>{orderData.dateFrom}</span></p>
                                 </div>
                                 <ModelPhoto name={orderData.car.name} imgSrc={orderData.car.thumbnail.path} className={RESULT_FORM_PHOTO_CLASS} />
                             </div>

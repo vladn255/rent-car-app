@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import PropTypes from 'prop-types';
 
 const AUTOCOMPLETE_LETTER_COUNT = 2;
@@ -19,6 +19,10 @@ const AutocompleteTextInputs = ({ values: { city, pickpoint }, citiesData, pickp
     const [isListVisible, setIsListVisible] = useState(false);
     const [cities, setCities] = useState(citiesData);
     const [pickpoints, setPickpoints] = useState(pickpointData);
+
+    useEffect(() => {
+        setPickpoints(pickpointData)
+    }, [pickpointData])
 
     const inputCityChangeHandler = (evt) => {
         evt.preventDefault();

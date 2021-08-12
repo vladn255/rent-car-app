@@ -21,6 +21,7 @@ const MapComponent = ({ activeCity, activeMarker, markersData }) => {
     const [markers, setMarkers] = useState([])
 
     useEffect(() => {
+        setActiveMarkerCoords(activeMarkerCoords)
         if (savedYmaps !== null) {
             return unmountSequence(savedYmaps)
         }

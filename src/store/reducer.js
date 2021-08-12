@@ -26,10 +26,10 @@ const initialState = {
     color: '',
     modelColors: [],
     rate: {
-        id: '',
-        name: '',
+        id: null,
+        name: null,
         price: 0,
-        unit: ''
+        unit: null
     },
     additions: [],
     dateStart: {
