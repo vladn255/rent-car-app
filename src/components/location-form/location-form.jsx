@@ -66,15 +66,16 @@ const LocationForm = () => {
         setLocationData({ ...locationData, [locationValue.name]: locationValue.value })
 
         if (locationValue.name === Labels.CITY) {
-            const filteredCity = citiesData.slice().filter((item) => item.value === locationValue.value)
+            const filteredCity = citiesData.find((item) => item.value === locationValue.value)
 
-            if (filteredCity.length) {
+            if (filteredCity) {
+
                 setActiveCity({
-                    id: filteredCity[0].id,
-                    name: filteredCity[0].value
+                    id: filteredCity.id,
+                    name: filteredCity.value
                 })
 
-                const filteredPoints = pickpointData.filter((point) => point.cityId !== null && point.cityId.name === filteredCity[0].value)
+                const filteredPoints = pickpointData.filter((point) => point.cityId && point.cityId.name === filteredCity.value)
                 setPickpoints(filteredPoints.map((point) => {
                     return {
                         id: point.id,
@@ -85,12 +86,12 @@ const LocationForm = () => {
         }
 
         if (locationValue.name === Labels.PICKPOINT) {
-            const filteredPoints = pickpoints.slice().filter((item) => item.value === locationValue.value)
+            const filteredPoints = pickpoints.find((item) => item.value === locationValue.value)
 
-            if (filteredPoints.length) {
+            if (filteredPoints) {
                 setActiveMarker({
-                    value: filteredPoints[0].value,
-                    id: filteredPoints[0].id
+                    value: filteredPoints.value,
+                    id: filteredPoints.id
                 })
             }
         }

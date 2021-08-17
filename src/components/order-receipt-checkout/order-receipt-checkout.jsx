@@ -115,7 +115,6 @@ const OrderReceiptCheckout = ({ data }) => {
 
 OrderReceiptCheckout.propTypes = {
     data: PropTypes.shape({
-        isModalOpen: PropTypes.bool.isRequired,
         clickHandler: PropTypes.func.isRequired,
         city: PropTypes.object.isRequired,
         car: PropTypes.object.isRequired,

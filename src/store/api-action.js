@@ -59,12 +59,6 @@ const postOrder = (orderData) => (dispatch, _getState, api) => (
         .catch((err) => console.log(err))
 )
 
-const deleteOrder = (orderId) => (_dispatch, _getState, api) => (
-    api.delete(`/db/order/${orderId}`)
-    .then(() => console.log('delete worked'))
-        .catch((err) => console.log(err))
-)
-
 const fetchOrderData = (id) => (_dispatch, _getState, api) => (
     api.get(`/db/order/${id}`)
         .then(({ data: { data } }) => {
@@ -80,6 +74,5 @@ export {
     fetchModelTagsDataEntity,
     fetchRateDataEntity,
     postOrder,
-    deleteOrder,
     fetchOrderData
 }
