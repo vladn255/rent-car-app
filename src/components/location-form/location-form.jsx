@@ -59,7 +59,7 @@ const LocationForm = () => {
     const checkIsValid = () => {
         return isValid !== (locationData.city.length !== 0 && locationData.pickpoint.length !== 0)
             ? setIsValid(locationData.city.length !== 0 && locationData.pickpoint.length !== 0)
-            : isValid
+            : false
     };
 
     const setLocationDataValue = (locationValue) => {
@@ -88,12 +88,15 @@ const LocationForm = () => {
         if (locationValue.name === Labels.PICKPOINT) {
             const filteredPoints = pickpoints.find((item) => item.value === locationValue.value)
 
-            if (filteredPoints) {
-                setActiveMarker({
+            filteredPoints
+                ? setActiveMarker({
                     value: filteredPoints.value,
                     id: filteredPoints.id
                 })
-            }
+                : setActiveMarker({
+                    value: '',
+                    id: ''
+                })
         }
     };
 

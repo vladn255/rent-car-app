@@ -6,7 +6,7 @@ import { RoutePath, FULL_TANK_FUEL } from "../../const.js";
 
 import { fetchOrderData } from "../../store/api-action.js";
 
-import MainHeader from "../main-header/main-header";
+import MainHeaderLink from "../main-header-link/main-header-link";
 import OrderReceiptCheckout from "../order-receipt-checkout/order-receipt-checkout";
 import ModelPhoto from "../model-photo/model-photo.jsx";
 
@@ -39,7 +39,7 @@ const Checkout = () => {
                 ? <h2>Данные загружаются</h2>
                 : <main className="order-page checkout">
                     <h2 className="visually-hidden">Страница подтвержденного заказа</h2>
-                    <MainHeader additionalStyleName={"order-page__header"} />
+                    <MainHeaderLink additionalStyleName={"order-page__header"} />
                     <section className="order-page__content">
                         <div className="order-page__nav">
                             <span className="order-nav__item checkout__order-info">{`Заказ номер ${id}`}</span>

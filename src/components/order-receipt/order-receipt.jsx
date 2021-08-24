@@ -84,8 +84,8 @@ const OrderReceipt = () => {
     const initialDetails = [
         {
             name: `Пункт выдачи`,
-            value: [city.name, pickpoint.name].join(``),
-            text: [city.name, pickpoint.name].join(`\n`)
+            value: [city.name, pickpoint.value].join(``),
+            text: [city.name, pickpoint.value].join(`\n`)
         },
         {
             name: `Модель`,

@@ -37,7 +37,7 @@ const initialState = {
         valid: true
     },
     dateFinish: {
-        value: '',
+        value: dayjs().format(TIME_FORMAT),
         valid: true
     },
 

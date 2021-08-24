@@ -58,9 +58,19 @@ const getFuelTank = (featuresList, fuelValue) => {
         : fuelValue
 }
 
+const parseStringToDate = (date, format) => {
+    return dayjs(date, format).toDate()
+}
+
+const parseDateToString = (date, format) => {
+    return dayjs(date).format(format)
+}
+
 export {
     isDateValid,
     adaptOrderToPost,
     adaptPostToOrder,
-    getFuelTank
+    getFuelTank,
+    parseStringToDate,
+    parseDateToString
 }

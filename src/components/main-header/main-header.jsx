@@ -1,17 +1,12 @@
 import React from "react";
-import PropTypes from 'prop-types';
 
-const MainHeader = ({ additionalStyleName }) => {
+const MainHeader = () => {
     return (
-        <header className={`main-header ${additionalStyleName || ""}`}>
+        <header className="main-header">
             <h1 className="main-header__title" >Need for drive</h1>
             <span className="main-header__location">Ульяновск</span>
         </header>
     )
-}
-
-MainHeader.propTypes = {
-    additionalStyleName: PropTypes.string.isRequired
 }
 
 export default MainHeader;
