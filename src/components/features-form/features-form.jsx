@@ -10,26 +10,12 @@ import { fetchRateDataEntity } from "../../store/api-action";
 
 import OrderReceipt from "../order-receipt/order-receipt.jsx";
 import TabFormButton from "../tab-form-button/tab-form-button.jsx";
-import TextInput from "../text-input/text-input.jsx";
 import RadioInput from "../radio-input/radio-input.jsx";
 import CheckboxInput from "../checkbox-input/checkbox-input.jsx";
+import DatePickerInputs from "../date-picker-input/date-picker-input.jsx";
 
 dayjs.extend(CustomParseFormat)
 
-const DateInputs = [
-    {
-        name: "dateStart",
-        additionalClass: "features",
-        placeholder: "Введите дату и время",
-        label: "С"
-    },
-    {
-        name: "dateFinish",
-        additionalClass: "features",
-        placeholder: "Введите дату и время",
-        label: "По"
-    }
-];
 
 const AdditionalsCheckboxes = [
     {
@@ -61,6 +47,13 @@ const validateDate = (date, format) => {
     return dayjs(date, format).format(format) === date;
 }
 
+const isDurationNegative = (startDateString, finishDateString) => {
+    const startDate = dayjs(startDateString, TIME_FORMAT).toDate().getTime();
+    const finishDate = dayjs(finishDateString, TIME_FORMAT).toDate().getTime();
+
+    return (finishDate - startDate) < 0
+}
+
 const FeaturesForm = () => {
     const stateAdditions = useSelector((state) => state.additions)
     const modelColors = useSelector((state) => state.modelColors)
@@ -68,14 +61,8 @@ const FeaturesForm = () => {
     const [isValid, setIsValid] = useState(false);
     const [currentColor, setCurrentColor] = useState(FEATURES_FORM_COLOR_DEFAULT_NAME);
     const [currentDate, setCurrentDate] = useState({
-        dateStart: {
-            value: useSelector((state) => state.dateStart.value),
-            valid: true
-        },
-        dateFinish: {
-            value: useSelector((state) => state.dateFinish.value),
-            valid: true
-        }
+        dateStart: useSelector((state) => state.dateStart),
+        dateFinish: useSelector((state) => state.dateFinish)
     });
     const [currentRate, setCurrentRate] = useState(useSelector((state) => state.rate));
     const [rateData, setRateData] = useState([])
@@ -115,7 +102,10 @@ const FeaturesForm = () => {
     }
 
     const checkIsValid = () => {
-        return isDateValid(currentDate.dateStart) && isDateValid(currentDate.dateFinish) && currentRate.name !== ''
+        return isDateValid(currentDate.dateStart)
+            && isDateValid(currentDate.dateFinish)
+            && !isDurationNegative(currentDate.dateStart.value, currentDate.dateFinish.value)
+            && currentRate.name
             ? setIsValid(true)
             : setIsValid(false)
     };
@@ -166,15 +156,7 @@ const FeaturesForm = () => {
                         </ul>
                     </fieldset>
 
-                    <fieldset className="features-form__fieldset features-form__fieldset--date form__fieldset">
-                        <legend className="features-form__legend form__legend">Дата аренды</legend>
-                        <ul className="features-form__list features-form__list--date">
-                            {DateInputs.map((input) =>
-                                <li className="features-form__item" key={input.name}>
-                                    <TextInput setDataValue={setDateValue} inputInfo={input} value={currentDate[input.name].value} isValid={currentDate[input.name].valid} validationText={'формат [ДД.ММ.ГГГГ ЧЧ:ММ]'} />
-                                </li>)}
-                        </ul>
-                    </fieldset>
+                    <DatePickerInputs dateStart={currentDate.dateStart} dateFinish={currentDate.dateFinish} setDateValue={setDateValue} />
 
                     <fieldset className="features-form__fieldset features-form__fieldset--rate form__fieldset">
                         <legend className="features-form__legend form__legend">Тариф</legend>

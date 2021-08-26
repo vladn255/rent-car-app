@@ -1,8 +1,14 @@
-import { fetchModelsData, fetchCitiesData, fetchPickpointData } from "./action.js";
+import { adaptPostToOrder } from "../utils.js";
+import {
+    fetchModelsData,
+    fetchCitiesData,
+    fetchPickpointData,
+    setOrderId
+} from "./action.js";
 
 
 const fetchModelsDataEntity = () => (dispatch, _getState, api) => (
-    api.get('/db/car?&limit=50')
+    api.get('/db/car?&limit=30')
         .then(({ data: { data } }) => {
             dispatch(fetchModelsData(data));
             return data;
@@ -44,10 +50,29 @@ const fetchRateDataEntity = () => (_dispatch, _getState, api) => (
         .catch((err) => console.log(err))
 )
 
+const postOrder = (orderData) => (dispatch, _getState, api) => (
+    api.post('/db/order', orderData)
+        .then(({ data: { data: { id } } }) => {
+            dispatch(setOrderId(id))
+            return id
+        })
+        .catch((err) => console.log(err))
+)
+
+const fetchOrderData = (id) => (_dispatch, _getState, api) => (
+    api.get(`/db/order/${id}`)
+        .then(({ data: { data } }) => {
+            return (adaptPostToOrder(data))
+        })
+        .catch((err) => console.log(err))
+)
+
 export {
     fetchModelsDataEntity,
     fetchCitiesEntity,
     fetchPickpoint,
     fetchModelTagsDataEntity,
-    fetchRateDataEntity
+    fetchRateDataEntity,
+    postOrder,
+    fetchOrderData
 }

@@ -19,15 +19,17 @@ const MapComponent = ({ activeCity, activeMarker, markersData }) => {
     const [activeCityCoords, setActiveCityCoords] = useState(center)
     const [activeMarkerCoords, setActiveMarkerCoords] = useState(activeCityCoords)
     const [markers, setMarkers] = useState([])
+    const [isLoading, setIsLoading] = useState(false)
 
     useEffect(() => {
+        setActiveMarkerCoords(activeMarkerCoords)
         if (savedYmaps !== null) {
-            return unmountSequence(savedYmaps)
+            loadSequence(savedYmaps)
         }
     }, [activeCity, activeMarker, markersData])
 
-    const geocode = (ymaps, location, callback) => {
-        ymaps.geocode(location, {
+    const geocode = async (ymaps, location, callback) => {
+        await ymaps.geocode(location, {
             results: 1
         }).then((response) => {
             const firstGeoObject = response.geoObjects.get(0)
@@ -37,26 +39,34 @@ const MapComponent = ({ activeCity, activeMarker, markersData }) => {
     }
 
 
-    const unmountSequence = (ymaps) => {
+    const loadSequence = (ymaps) => {
         const fullAddress = `${activeCity} ${activeMarker}`
         geocode(ymaps, activeCity, setActiveCityCoords)
         geocode(ymaps, fullAddress, setActiveMarkerCoords)
         setZoom(ZOOM)
 
         const newMarkers = []
-        markersData.slice().map(async (marker) => {
-            const fullMarkerAddress = `${activeCity} ${marker.value}`
+        const getMarkers = async () => {
+            setIsLoading(true)
 
-            const getGeocodedMarkers = (coords) => {
-                newMarkers.push({
-                    id: marker.id,
-                    value: coords
-                })
-            }
+            await markersData.slice().map(async (marker) => {
+                const fullMarkerAddress = `${activeCity} ${marker.value}`
 
-            await geocode(ymaps, fullMarkerAddress, getGeocodedMarkers)
-        })
-        setMarkers(newMarkers)
+                const getGeocodedMarkers = (coords) => {
+                    newMarkers.push({
+                        id: marker.id,
+                        value: coords
+                    })
+
+                    if (markersData.length === newMarkers.length) {
+                        setMarkers(newMarkers)
+                        setIsLoading(false)
+                    }
+                }
+                await geocode(ymaps, fullMarkerAddress, getGeocodedMarkers)
+            })
+        }
+        getMarkers()
     }
 
     return (
@@ -66,7 +76,7 @@ const MapComponent = ({ activeCity, activeMarker, markersData }) => {
                 load: "package.full"
             }}
         >
-            {markers.length === 0
+            {markers.length === 0 && isLoading
                 ? < Map
                     state={{ center: activeCityCoords, zoom: zoom, controls: controls }}
                     onLoad={async (ymaps) => {
@@ -83,9 +93,12 @@ const MapComponent = ({ activeCity, activeMarker, markersData }) => {
                     width={'100%'}
                     height={'352px'}>
 
-                    {markers.map((marker) => <Placemark key={marker.id} geometry={marker.value} options={{
-                        preset: 'islands#greenCircleIcon',
-                    }} />)}
+                    {markers.map((marker) => {
+                        return <Placemark key={marker.id} geometry={marker.value} options={{
+                            preset: 'islands#greenCircleIcon',
+                        }} />
+                    }
+                    )}
                 </Map>
             }
         </YMaps>

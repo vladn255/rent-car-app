@@ -1,23 +1,26 @@
-import React, { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import dayjs from "dayjs";
 import CustomParseFormat from "dayjs/plugin/customParseFormat";
 
 import { ReceiptNames, TIME_FORMAT, ReceiptCosts } from "../../const";
 import { isDateValid } from "../../utils";
 import OrderReceiptItem from "../order-receipt-item/order-receipt-item";
+import { setPrice } from "../../store/action";
 
 dayjs.extend(CustomParseFormat)
 
 const HOURS_IN_A_DAY = 24;
 const MINUTES_IN_AN_HOUR = 60;
 const DAYS_IN_A_WEEK = 7;
+const DAYS_IN_A_MONTH = 30;
 const minutesInADay = HOURS_IN_A_DAY * MINUTES_IN_AN_HOUR
 
 const RateUnitDividers = {
     "мин": 1,
     "сутки": MINUTES_IN_AN_HOUR * HOURS_IN_A_DAY,
-    "7 дней": MINUTES_IN_AN_HOUR * HOURS_IN_A_DAY * DAYS_IN_A_WEEK
+    "7 дней": MINUTES_IN_AN_HOUR * HOURS_IN_A_DAY * DAYS_IN_A_WEEK,
+    "30 дней": MINUTES_IN_AN_HOUR * HOURS_IN_A_DAY * DAYS_IN_A_MONTH
 }
 
 const getDaysDuration = (durationInMinutes) => {
@@ -33,7 +36,7 @@ const getHoursDuration = (durationInMinutes) => {
         : ''
 }
 const getMinutesDuration = (durationInMinutes) => {
-    const duration = durationInMinutes / Math.trunc(durationInMinutes / MINUTES_IN_AN_HOUR % HOURS_IN_A_DAY) % MINUTES_IN_AN_HOUR
+    const duration = Math.trunc(durationInMinutes / Math.trunc(durationInMinutes / MINUTES_IN_AN_HOUR % HOURS_IN_A_DAY) % MINUTES_IN_AN_HOUR)
     return (duration !== 0) && (!isNaN(duration))
         ? `${duration}м`
         : ''
@@ -41,6 +44,8 @@ const getMinutesDuration = (durationInMinutes) => {
 
 const getDurationCost = (rate, duration) => {
     const divider = RateUnitDividers[rate.unit]
+        ? RateUnitDividers[rate.unit]
+        : RateUnitDividers["мин"]
     return Math.floor(rate.price * duration / divider)
 }
 
@@ -55,6 +60,8 @@ const getCurrentCost = (list) => {
 }
 
 const OrderReceipt = () => {
+    const dispatch = useDispatch();
+
     const city = useSelector((state) => state.city);
     const pickpoint = useSelector((state) => state.pickpoint);
     const model = useSelector((state) => state.model);
@@ -77,8 +84,8 @@ const OrderReceipt = () => {
     const initialDetails = [
         {
             name: `Пункт выдачи`,
-            value: [city, pickpoint].join(``),
-            text: [city, pickpoint].join(`\n`)
+            value: [city.name, pickpoint.value].join(``),
+            text: [city.name, pickpoint.value].join(`\n`)
         },
         {
             name: `Модель`,
@@ -95,7 +102,7 @@ const OrderReceipt = () => {
             name: `Длительность аренды`,
             value: getDuration(dateFinish, dateStart),
             text: getDuration(dateFinish, dateStart),
-            price: getDurationCost(rate, duration)
+            price: useMemo(() => getDurationCost(rate, duration), [rate, duration])
         },
         {
             name: `Тариф`,
@@ -124,7 +131,9 @@ const OrderReceipt = () => {
         })
 
         if (!(JSON.stringify(details) === JSON.stringify(newDetails))) {
-            setCost(getCurrentCost(newDetails))
+            const newCost = getCurrentCost(newDetails)
+            setCost(newCost)
+            dispatch(setPrice(newCost))
             setDetails(newDetails);
         }
 
@@ -135,8 +144,8 @@ const OrderReceipt = () => {
         <div className="order-page__receipt receipt">
             <h3 className="receipt__title">Ваш заказ:</h3>
             <ul className="receipt__list">
-                {details.filter((detail) => detail.value.length !== 0)
-                    .map((detail) => <OrderReceiptItem key={detail.name} name={detail.name} value={detail.text} />)}
+                {details.filter((detail) => detail.value)
+                    .map((detail, id) => <OrderReceiptItem key={id} name={detail.name} value={detail.text} />)}
             </ul>
             <p className="receipt__cost"><b>Цена:</b>{` ${cost} ₽`}</p>
         </div>

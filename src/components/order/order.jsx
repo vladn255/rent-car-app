@@ -6,7 +6,7 @@ import { Tabs } from "../../const.js";
 
 import FeaturesForm from "../features-form/features-form";
 import LocationForm from "../location-form/location-form";
-import MainHeader from "../main-header/main-header";
+import MainHeaderLink from "../main-header-link/main-header-link";
 import ModelForm from "../model-form/model-form";
 import OrderNav from "../order-nav/order-nav";
 import ResultForm from "../result-form/result-form";
@@ -30,7 +30,7 @@ const Order = ({ activeTab }) => {
     return (
         <main className="order-page">
             <h2 className="visually-hidden">Страница заказа</h2>
-            <MainHeader additionalStyleName={"order-page__header"} />
+            <MainHeaderLink additionalStyleName={"order-page__header"} />
             <section className="order-page__content">
                 <OrderNav activeTab={activeTab} />
 
