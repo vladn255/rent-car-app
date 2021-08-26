@@ -8,8 +8,14 @@ import {
 
 const initialState = {
     activeTab: Tabs.get('LOCATION'),
-    city: '',
-    pickpoint: '',
+    city: {
+        id: '',
+        name: ''
+    },
+    pickpoint: {
+        id: '',
+        name: ''
+    },
     model: {
         name: '',
         number: '',
@@ -20,10 +26,10 @@ const initialState = {
     color: '',
     modelColors: [],
     rate: {
-        id: '',
-        name: '',
+        id: null,
+        name: null,
         price: 0,
-        unit: ''
+        unit: null
     },
     additions: [],
     dateStart: {
@@ -31,13 +37,17 @@ const initialState = {
         valid: true
     },
     dateFinish: {
-        value: '',
+        value: dayjs().format(TIME_FORMAT),
         valid: true
     },
 
     modelsData: [],
     citiesData: [],
-    pickpointData: []
+    pickpointData: [],
+    fuel: 0,
+    order: '',
+    price: 0,
+    orderData: {}
 }
 
 const reducer = (state = initialState, action) => {
@@ -114,6 +124,28 @@ const reducer = (state = initialState, action) => {
             return {
                 ...state,
                 modelColors: action.payload
+            }
+        case ActionType.SET_FUEL_TANK:
+            return {
+                ...state,
+                fuel: action.payload
+            }
+
+        case ActionType.SET_ORDER_ID:
+            return {
+                ...state,
+                order: action.payload
+            }
+
+        case ActionType.SET_PRICE:
+            return {
+                ...state,
+                price: action.payload
+            }
+        case ActionType.SET_ORDER_DATA:
+            return {
+                ...state,
+                orderData: action.payload
             }
 
         default: {

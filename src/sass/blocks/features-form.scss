@@ -18,6 +18,23 @@
   position: relative;
   margin-right: 16px;
   flex-wrap: wrap;
+  align-items: center;
+
+  .features-form__input {
+    overflow: initial;
+  }
+
+  .react-datetime-picker__wrapper {
+    border: none;
+  }
+
+  .react-datetime-picker__calendar {
+    z-index: 3;
+  }
+
+  .react-datetime-picker__clear-button {
+    order: 2;
+  }
 
   @media (max-width: $mobile-width) {
     font-size: 12px;

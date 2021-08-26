@@ -1,47 +1,70 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import { Link, useParams } from "react-router-dom";
 
-import { RoutePath } from "../../const.js";
+import { RoutePath, FULL_TANK_FUEL } from "../../const.js";
 
+import { fetchOrderData } from "../../store/api-action.js";
 
-import MainHeader from "../main-header/main-header";
-import OrderReceipt from "../order-receipt/order-receipt";
+import MainHeaderLink from "../main-header-link/main-header-link";
+import OrderReceiptCheckout from "../order-receipt-checkout/order-receipt-checkout";
+import ModelPhoto from "../model-photo/model-photo.jsx";
+
+const RESULT_FORM_PHOTO_CLASS = "result__picture"
 
 const Checkout = () => {
+    const dispatch = useDispatch()
+    const { id } = useParams()
 
-    const model = useSelector((state) => state.model);
-    const dateStart = useSelector((state) => state.dateStart);
+    const [orderData, setOrderData] = useState(null)
+    const [fuel, setFuel] = useState(FULL_TANK_FUEL)
+
+    useEffect(() => {
+        
+        if (orderData === null) {
+            dispatch(fetchOrderData(id))
+                .then((data) => {
+                    setOrderData(data)
+
+                    data.isFullTank
+                        ? setFuel(FULL_TANK_FUEL)
+                        : setFuel(data.car.tank)
+                })
+        }
+    }, [orderData])
 
     return (
-        <main className="order-page checkout">
-            <h2 className="visually-hidden">Страница подтвержденного заказа</h2>
-            <MainHeader additionalStyleName={"order-page__header"} />
-            <section className="order-page__content">
-                <div className="order-page__nav">
-                    <span className="order-nav__item checkout__order-info">Заказ номер RU58491823</span>
-                </div>
-                <div className="order-page__form">
-                    <div className="order-page__form-wrapper result__container">
-                        <div className="result__wrapper">
-                            <h3 className="checkout__title">Ваш заказ подтверждён</h3>
-                            <p className="result__model">{model}</p>
-                            <p className="result__plate-number">K 761 HA 73</p>
-                            <p className="result__additional"><b>Топливо</b> 100%</p>
-                            <p className="result__additional"><b>Доступна с </b><span>{dateStart}</span></p>
+        <>
+            {orderData === null
+                ? <h2>Данные загружаются</h2>
+                : <main className="order-page checkout">
+                    <h2 className="visually-hidden">Страница подтвержденного заказа</h2>
+                    <MainHeaderLink additionalStyleName={"order-page__header"} />
+                    <section className="order-page__content">
+                        <div className="order-page__nav">
+                            <span className="order-nav__item checkout__order-info">{`Заказ номер ${id}`}</span>
                         </div>
-                        {/* eslint-disable-next-line no-undef */}
-                        <img className="result__picture" src={`${process.env.PUBLIC_URL}/img/gallery/image2.png`}
-                            alt="ELANTRA view" width="256" height="116"></img>
-                    </div>
-                    <div className="order-page__receipt-wrapper">
-                        <OrderReceipt />
-                        <Link to={RoutePath.ORDER} className="button button--submit button--checkout-color">Отменить</Link>
-                    </div>
-                </div>
+                        <div className="order-page__form">
+                            <div className="order-page__form-wrapper result__container">
+                                <div className="result__wrapper">
+                                    <h3 className="checkout__title">Ваш заказ подтверждён</h3>
+                                    <p className="result__model">{orderData.car.name}</p>
+                                    <p className="result__plate-number">{orderData.car.number}</p>
+                                    <p className="result__additional"><b>Топливо </b>{`${fuel}%`}</p>
+                                    <p className="result__additional"><b>Доступна с </b><span>{orderData.dateFrom}</span></p>
+                                </div>
+                                <ModelPhoto name={orderData.car.name} imgSrc={orderData.car.thumbnail.path} className={RESULT_FORM_PHOTO_CLASS} />
+                            </div>
+                            <div className="order-page__receipt-wrapper">
+                                <OrderReceiptCheckout data={orderData}/>
+                                <Link to={RoutePath.ORDER} className="button button--submit button--checkout-color">Отменить</Link>
+                            </div>
+                        </div>
 
-            </section >
-        </main >
+                    </section >
+                </main >
+            }
+        </>
     )
 }
 

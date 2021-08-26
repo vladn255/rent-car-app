@@ -33,7 +33,7 @@ const LANGUAGES = {
 const RoutePath = {
     MAIN: '/rent-car-app',
     ORDER: '/order',
-    CHECKOUT: '/checkout'
+    CHECKOUT: '/checkout/'
 };
 
 const Tabs = new Map([
@@ -62,7 +62,11 @@ const ActionType = {
     SET_MODELS_DATA: "setModelsData",
     SET_CITIES_DATA: "setCitiesData",
     SET_PICKPOINT_DATA: "setPickpointData",
-    SET_MODEL_COLORS: "setModelColors"
+    SET_MODEL_COLORS: "setModelColors",
+    SET_FUEL_TANK: "setFuelTank",
+    SET_ORDER_ID: "setOrderId",
+    SET_PRICE: "setPrice",
+    SET_ORDER_DATA: "setOrderData"
 };
 
 const Additionals = {
@@ -91,6 +95,10 @@ const TIME_FORMAT = 'DD.MM.YYYY HH:mm'
 
 const DATE_LETTER_COUNT = 16;
 
+const ORDER_STATUS_ID = '5e26a191099b810b946c5d89';
+
+const FULL_TANK_FUEL = 100;
+
 export {
     SLIDES_INFO,
     LANGUAGES,
@@ -104,5 +112,7 @@ export {
     MODEL_FORM_RADIO_DEFAULT_NAME,
     TIME_FORMAT,
     FEATURES_FORM_COLOR_DEFAULT_NAME,
-    DATE_LETTER_COUNT
+    DATE_LETTER_COUNT,
+    ORDER_STATUS_ID,
+    FULL_TANK_FUEL
 }
